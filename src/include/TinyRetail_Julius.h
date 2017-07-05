@@ -1,13 +1,9 @@
-#ifndef _TinyRetail_Julius__
-#define _TinyRetail_Julius__
+#pragma once
 
 /* include top Julius library header */
 #include <julius/juliuslib.h>
 
 #include <stdio.h>
-
-/*Juliusの設定ファイルである *.jconfファイルを指定する*/
-#define jconf_filename "../kaimono.jconf"
 
 class TinyRetail_Julius{
 
@@ -21,15 +17,16 @@ public:
     int     start_stream();
 
 private:
-    void    status_recready(Recog *recog, void *dummy);
-    void    status_recstart(Recog *recog, void *dummy);
-    void    put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo);
-    void    output_result(Recog *recog, void *dummy);
+    static  void    put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo);
+    static  void    status_recready(Recog *recog, void *dummy);
+    static  void    status_recstart(Recog *recog, void *dummy);
+    static  void    output_result(Recog *recog, void *dummy);
 
 public:
 
 private:
     Recog *recog;   //認識コアのインスタンス変数
-}
 
-#endif //_TinyRetail_Julius__
+    /*Juliusの設定ファイルである *.jconfファイルを指定する*/
+    // char *jconf_filename="../kaimono.jconf";
+};

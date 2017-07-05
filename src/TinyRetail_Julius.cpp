@@ -37,7 +37,7 @@ int TinyRetail_Julius::Begin(){
     //jlog_set_output(NULL);
 
     //指定した*.jconfファイルから設定を読み込む
-    jconf = j_config_load_file_new(jconf_filename);
+    jconf = j_config_load_file_new("../kaimono.jconf");
     if (jconf == NULL) {		/* error */
         fprintf(stderr, "Try `-help' for more information.\n");
         return -1;
@@ -148,7 +148,7 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
 
     RecogProcess *r;
 
-    for(r=recog->process_list;r;r=->next){
+    for(r=recog->process_list;r;r=r->next){
 
         //処理が生きていない時は飛ばす
         if(!r->live) continue;
@@ -186,36 +186,36 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
         }
         /* continue to next process instance */
             continue;
-        }
     #endif
-    }
 
-    //全てのセンテンスをアウトプットする
-    WORD_INFO *winfo = r->lm->winfo;
+        //全てのセンテンスをアウトプットする
+        WORD_INFO *winfo = r->lm->winfo;
 
-    for(int n=0; n < r->result.sentnum; n++){   //センテンスの数だけループする
+        for(int n=0; n < r->result.sentnum; n++){   //センテンスの数だけループする
 
-        Sentence *s = &(r->result.sent[n]);     //センテンスの構造体のアドレス入手
-        WORD_ID *seq = s->word;                 //ワード(文を品詞レベルまで分解したもの)の集まりのIDを取得
-        int seqnum = s->word_num;               //ワードの数
+            Sentence *s = &(r->result.sent[n]);     //センテンスの構造体のアドレス入手
+            WORD_ID *seq = s->word;                 //ワード(文を品詞レベルまで分解したもの)の集まりのIDを取得
+            int seqnum = s->word_num;               //ワードの数
 
-        //結果の出力
-        printf("sentence%d:", n+1);
-        for(int i=0;i<seqnum;i++) printf(" %s", winfo->woutput[seq[i]]); //ワードの数だけ回す
-        printf("\n");
+            //結果の出力
+            printf("sentence%d:", n+1);
+            for(int i=0;i<seqnum;i++) printf(" %s", winfo->woutput[seq[i]]); //ワードの数だけ回す
+            printf("\n");
 
-        //音素列
-        printf("phseq%d:", n+1);
-        put_hypo_phoneme(seq, seqnum, winfo);
-        printf("\n");
+            //音素列
+            printf("phseq%d:", n+1);
+            put_hypo_phoneme(seq, seqnum, winfo);
+            printf("\n");
 
-        //信頼度
-        printf("cmscore%d:", n+1);
-        for (int i=0;i<seqnum; i++) printf(" %5.3f", s->confidence[i]);
-        printf("\n");
+            //信頼度
+            printf("cmscore%d:", n+1);
+            for (int i=0;i<seqnum; i++) printf(" %5.3f", s->confidence[i]);
+            printf("\n");
 
-        //スコア
-        printf("score%d: %f", n+1, s->score);
+            //スコア
+            printf("score%d: %f", n+1, s->score);
+        }
+
     }
     fflush(stdout); //出力バッファをフラッシュする
 }
