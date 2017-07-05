@@ -1,8 +1,12 @@
-LIBSENT=../julius-4.3.1/libsent
+LIBSENT=../julius/libsent
 #LIBSENT=../libsent
 
-LIBJULIUS=../julius-4.3.1/libjulius
+LIBJULIUS=../julius/libjulius
 #LIBJULIUS=../libjulius
+
+INCLUDE_PATH=-I./include
+
+ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp
 
 CC=gcc
 CFLAGS=-g -O2 
@@ -21,14 +25,26 @@ LDFLAGS= -L$(LIBJULIUS) `$(LIBJULIUS)/libjulius-config --libs` -L$(LIBSENT) `$(L
 
 ############################################################
 
-all: julius-simple
+# all: julius-simple
 
-julius-simple: julius-simple.cpp
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o julius-simple julius-simple.cpp $(LDFLAGS)
+# julius-simple: julius-simple.cpp
+# 	$(CC) $(CFLAGS) $(CPPFLAGS) -o julius-simple julius-simple.cpp $(LDFLAGS)
+
+# clean:
+# 	$(RM) *.o *.bak *~ core TAGS
+
+# distclean:
+# 	$(RM) *.o *.bak *~ core TAGS
+# 	$(RM) julius-simple
+
+all: TinyRetail
+
+julius: $(ALL_FILE)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_PATH) -o TinyRetail $(ALL_FILE) $(LDFLAGS)
 
 clean:
 	$(RM) *.o *.bak *~ core TAGS
 
 distclean:
 	$(RM) *.o *.bak *~ core TAGS
-	$(RM) julius-simple
+	$(RM) TinyRetail

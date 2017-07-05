@@ -44,7 +44,7 @@ status_recready(Recog *recog, void *dummy)
 
 /**
  * Callback to be called when speech input is triggered.
- *
+ * 音声入力がトリガされたときに呼び出されるコールバック
  */
 static void
 status_recstart(Recog *recog, void *dummy)
@@ -56,7 +56,7 @@ status_recstart(Recog *recog, void *dummy)
 
 /**
  * Sub function to output phoneme sequence.
- *
+ * 音素列を出力するSub関数
  */
 static void
 put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo)
