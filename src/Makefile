@@ -8,7 +8,7 @@ INCLUDE_PATH=-I./include
 
 ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp
 
-CC=gcc
+CC=g++
 CFLAGS=-g -O2 
 
 ####
