@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 /*Juliusの設定ファイルである *.jconfファイルを指定する*/
-#define jconf_filename ../kaimono.jconf
+#define jconf_filename "../kaimono.jconf"
 
 class TinyRetail_Julius{
 

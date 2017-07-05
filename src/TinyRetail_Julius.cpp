@@ -84,8 +84,10 @@ int TinyRetail_Julius::Begin(){
 @ return
 ******************************************/
 int TinyRetail_Julius::start_stream(){
-    ret = j_recognize_stream(recog);
+    int ret = j_recognize_stream(recog);
     if (ret == -1) return -1;	/* error(内部でエラーが起こった) */
+
+    return ret;
 }
 
 /*****************************************
@@ -209,7 +211,7 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
 
         //信頼度
         printf("cmscore%d:", n+1);
-        for (i=0;i<seqnum; i++) printf(" %5.3f", s->confidence[i]);
+        for (int i=0;i<seqnum; i++) printf(" %5.3f", s->confidence[i]);
         printf("\n");
 
         //スコア
