@@ -37,9 +37,9 @@ LDFLAGS= -L$(LIBJULIUS) `$(LIBJULIUS)/libjulius-config --libs` -L$(LIBSENT) `$(L
 # 	$(RM) *.o *.bak *~ core TAGS
 # 	$(RM) julius-simple
 
-all: TinyRetail
+all: tinyRetail
 
-julius: $(ALL_FILE)
+tinyRetail: $(ALL_FILE)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_PATH) -o TinyRetail $(ALL_FILE) $(LDFLAGS)
 
 clean:

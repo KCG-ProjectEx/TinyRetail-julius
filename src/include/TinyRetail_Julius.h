@@ -4,7 +4,7 @@
 /* include top Julius library header */
 #include <julius/juliuslib.h>
 
-#include <stdThread.h>
+#include <stdio.h>
 
 /*Juliusの設定ファイルである *.jconfファイルを指定する*/
 #define jconf_filename ../kaimono.jconf
