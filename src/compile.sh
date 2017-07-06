@@ -2,7 +2,8 @@
 
 USER="pi"
 PW="yasuda"
-WkDir="~/julius/julius-4.3.1/julius-simple"
+WkDir="~/TinyRetail-julius/src"
+FILE=julius.cpp
 
 while getopts abi:f: OPT
 #http://shellscript.sunone.me/parameter.html 参考文献
@@ -19,7 +20,7 @@ done
 if [ "$FLG_I" = "TRUE" ]; then
     IP=$VALUE_I
 else
-    IP="192.168.0.9"
+    IP="192.168.0.10"
 fi
 
 #ファイルを指定
@@ -30,9 +31,6 @@ if [ "$FLG_F" = "TRUE" ]; then
         echo "ERR : 指定したFILEが存在しません"
         exit 1
     fi
-else
-    echo "ERR : -f [file name]を指定していください"
-    exit 1
 fi
 
 #ファイル転送するなら
