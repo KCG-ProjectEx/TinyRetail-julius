@@ -27,6 +27,4 @@ public:
 private:
     Recog *recog;   //認識コアのインスタンス変数
 
-    /*Juliusの設定ファイルである *.jconfファイルを指定する*/
-    // char *jconf_filename="../kaimono.jconf";
 };

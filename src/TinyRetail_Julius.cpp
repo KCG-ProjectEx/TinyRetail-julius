@@ -36,8 +36,11 @@ int TinyRetail_Julius::Begin(){
     // ログが要らなきゃコメントアウト消して
     //jlog_set_output(NULL);
 
+    /*Juliusの設定ファイルである *.jconfファイルを指定する*/
+    const char* jconf_filename[]= {"../kaimono.jconf"};
+
     //指定した*.jconfファイルから設定を読み込む
-    jconf = j_config_load_file_new("../kaimono.jconf");
+    jconf = j_config_load_file_new((char*)jconf_filename);
     if (jconf == NULL) {		/* error */
         fprintf(stderr, "Try `-help' for more information.\n");
         return -1;
