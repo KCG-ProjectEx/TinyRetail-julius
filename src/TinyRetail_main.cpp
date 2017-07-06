@@ -1,5 +1,5 @@
-// #include <TinyRetail_Julius.h>
-#include <Post_curl.h>
+#include <TinyRetail_Julius.h>
+// #include <Post_curl.h>
 #include <stdio.h>
 
 int main(int argc,char *argv[]){
@@ -14,24 +14,24 @@ int main(int argc,char *argv[]){
     // ret = pTinyRetail->start_stream();
     // fprintf(stdout,"start_stream() ret = %d",ret);
 
-    Post_curl *pPost_curl = new Post_curl();
+    // Post_curl *pPost_curl = new Post_curl();
 
-    const char *sent_to_url="http://192.168.0.6/tinyRetail_index/get_post.php";
+    // const char *sent_to_url="http://192.168.0.6/tinyRetail_index/get_post.php";
 
-    int ret = pPost_curl->Begin(sent_to_url);
-    fprintf(stdout,"Begin() ret = %d\n",ret);
+    // int ret = pPost_curl->Begin(sent_to_url);
+    // fprintf(stdout,"Begin() ret = %d\n",ret);
 
-    getchar();
+    // getchar();
 
-    const char *post_data1="name=daniel&project=curl";
-    ret = pPost_curl->send_post(post_data1);
-    fprintf(stdout,"send_post() ret = %d\n",ret);
+    // const char *post_data1="name=daniel&project=curl";
+    // ret = pPost_curl->send_post(post_data1);
+    // fprintf(stdout,"send_post() ret = %d\n",ret);
 
-    getchar();
+    // getchar();
 
-    const char *post_data2="name=yasuda&project=julius";
-    ret = pPost_curl->send_post(post_data2);
-    fprintf(stdout,"send_post() ret = %d\n",ret);
+    // const char *post_data2="name=yasuda&project=julius";
+    // ret = pPost_curl->send_post(post_data2);
+    // fprintf(stdout,"send_post() ret = %d\n",ret);
 
     return 0;
 }

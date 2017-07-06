@@ -1,10 +1,21 @@
 #include <Post_curl.h>
 
+/*****************************************
+@ function
+@ parameter
+@ return
+******************************************/
 Post_curl::Post_curl(){
 
     fprintf(stdout,"Welcome to curl\n");    
 }
 
+/*****************************************
+@ function
+    libcurlで使用したハンドルの開放
+@ parameter
+@ return
+******************************************/
 Post_curl::~Post_curl(){
 
     // curl_easy_init()で取得したハンドルを開放する
@@ -17,6 +28,15 @@ Post_curl::~Post_curl(){
     fprintf(stdout,"See you curl\n");
 }
 
+/*****************************************
+@ function
+    libcurlの初期設定,
+    ハンドルの取得,
+@ parameter
+    POSTの送信先url
+@ return
+    正常終了 0,　異常終了 -1
+******************************************/
 int Post_curl::Begin(const char *curl_url){
 
     /* In windows, this will init the winsock stuff */ 
@@ -42,6 +62,14 @@ int Post_curl::Begin(const char *curl_url){
     return 0;
 }
 
+/*****************************************
+@ function
+    POSTデータを送信する
+@ parameter
+    POSTデータ
+@ return
+    正常終了 0, 異常終了 -1
+******************************************/
 int Post_curl::send_post(const char *post_data){
 
     CURLcode res;
