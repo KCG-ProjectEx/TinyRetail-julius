@@ -19,15 +19,9 @@ int main(int argc,char *argv[]){
     pTinyRetail->stop_stream();
     fprintf(stdout,"stop_stream() \n");
 
-    getchar();
-
-    ret = pTinyRetail->start_stream();
-    fprintf(stdout,"start_stream() ret = %d\n",ret);
-
-    getchar();
-
-    pTinyRetail->stop_stream();
-    fprintf(stdout,"stop_stream() \n");
+    //終了
+    delete(pTinyRetail);
+    pTinyRetail=NULL;
 
     // Post_curl *pPost_curl = new Post_curl();
 

@@ -16,9 +16,11 @@ TinyRetail_Julius::TinyRetail_Julius(){
 @ return
 ******************************************/
 TinyRetail_Julius::~TinyRetail_Julius(){
-    /* calling j_close_stream(recog) at any time will terminate
-        recognition and exit j_recognize_stream() */
-    j_close_stream(recog); //ストリームを閉じる
+
+    // juliusの認識スレッドが生きてたら終了させる
+    if(pJulius_Thread->fIamZombie==true){
+        stop_stream();
+    }
 
     j_recog_free(recog); // インスタンスを開放する
 
@@ -108,8 +110,8 @@ int TinyRetail_Julius::start_stream(){
 ******************************************/
 void TinyRetail_Julius::stop_stream(){
 
-    // 別スレッドで動作しているJulius認識部を終了させる
-    j_request_terminate(recog);
+    // 別スレッドで動作しているJulius認識部を終了させる/
+    j_close_stream(recog);
 
     // Juliusの認識部が終了するまで待つ
     while( pJulius_Thread->fIamZombie==false ); 
