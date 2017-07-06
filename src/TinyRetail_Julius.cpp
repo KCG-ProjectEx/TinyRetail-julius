@@ -17,11 +17,6 @@ TinyRetail_Julius::TinyRetail_Julius(){
 ******************************************/
 TinyRetail_Julius::~TinyRetail_Julius(){
 
-    // juliusの認識スレッドが生きてたら終了させる
-    if(pJulius_Thread->fIamZombie==true){
-        stop_stream();
-    }
-
     j_recog_free(recog); // インスタンスを開放する
 
     fprintf(stdout,"See you julius\n");
