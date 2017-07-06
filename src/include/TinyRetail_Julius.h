@@ -19,6 +19,7 @@ public:
     ~TinyRetail_Julius();
     int     Begin();
     int     start_stream();
+    void    stop_stream();
 
 private:
     static  void    put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo);

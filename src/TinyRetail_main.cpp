@@ -7,12 +7,27 @@ int main(int argc,char *argv[]){
     TinyRetail_Julius *pTinyRetail = new TinyRetail_Julius();
 
     int ret = pTinyRetail->Begin();
-    fprintf(stdout,"Begin() ret = %d",ret);
+    fprintf(stdout,"Begin() ret = %d\n",ret);
 
     getchar();
 
     ret = pTinyRetail->start_stream();
-    fprintf(stdout,"start_stream() ret = %d",ret);
+    fprintf(stdout,"start_stream() ret = %d\n",ret);
+
+    getchar();
+
+    pTinyRetail->stop_stream();
+    fprintf(stdout,"stop_stream() \n");
+
+    getchar();
+
+    ret = pTinyRetail->start_stream();
+    fprintf(stdout,"start_stream() ret = %d\n",ret);
+
+    getchar();
+
+    pTinyRetail->stop_stream();
+    fprintf(stdout,"stop_stream() \n");
 
     // Post_curl *pPost_curl = new Post_curl();
 

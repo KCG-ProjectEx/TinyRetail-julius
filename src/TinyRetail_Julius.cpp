@@ -11,6 +11,7 @@ TinyRetail_Julius::TinyRetail_Julius(){
 
 /*****************************************
 @ function
+    juliusで用いたインスタンスを開放する
 @ parameter
 @ return
 ******************************************/
@@ -21,13 +22,15 @@ TinyRetail_Julius::~TinyRetail_Julius(){
 
     j_recog_free(recog); // インスタンスを開放する
 
-    fprintf(stdout,"Thank you\n");
+    fprintf(stdout,"See you julius\n");
 }
 
 /*****************************************
 @ function
+    juliusを使うにあたっての初期設定
 @ parameter
 @ return
+    正常終了 : 0, 異常終了 : -1
 ******************************************/
 int TinyRetail_Julius::Begin(){
     Jconf *jconf;   //設定パラメータ格納エリア
@@ -83,25 +86,44 @@ int TinyRetail_Julius::Begin(){
 
 /*****************************************
 @ function
+    juliusの認識をスタートさせる
+@ parameter
+@ return
+    正常終了 : 0, 異常終了 : -1
+******************************************/
+int TinyRetail_Julius::start_stream(){
+
+    // Juliusの認識部を別スレッドで開始する
+    pJulius_Thread = new Julius_Thread(recog);
+    bool ret = pJulius_Thread->Begin();
+
+    return ((ret==true) ? 0 : -1);
+}
+
+/*****************************************
+@ function
+    juliusの認識をストップさせる
 @ parameter
 @ return
 ******************************************/
-int TinyRetail_Julius::start_stream(){
-    // int ret = j_recognize_stream(recog);
-    // if (ret == -1) return -1;	/* error(内部でエラーが起こった) */
+void TinyRetail_Julius::stop_stream(){
 
-    pJulius_Thread = new Julius_Thread(recog);
-    pJulius_Thread->Begin();
+    // 別スレッドで動作しているJulius認識部を終了させる
+    j_request_terminate(recog);
 
-    // return ret;
-    return 0;
+    // Juliusの認識部が終了するまで待つ
+    while( pJulius_Thread->fIamZombie==false ); 
+
+    // スレッドの終了
+    pJulius_Thread->End();
+    delete(pJulius_Thread);
+    pJulius_Thread=NULL;
 }
 
 /*****************************************
 @ function
     喋れるようになったら呼び出されるコールバック
 @ parameter
-
 @ return
 ******************************************/
 void TinyRetail_Julius::status_recready(Recog *recog, void *dummy){
@@ -148,6 +170,7 @@ void TinyRetail_Julius::put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo){
 
 /*****************************************
 @ function
+    juliusの認証結果を表示させる
 @ parameter
 @ return
 ******************************************/

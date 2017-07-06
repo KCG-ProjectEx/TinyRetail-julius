@@ -9,6 +9,8 @@ Julius_Thread::Julius_Thread(Recog *tmp){
 
 Julius_Thread::~Julius_Thread(){
 
+    fprintf(stdout,"See you Julius_Thread\n");
+
 }
 
 unsigned int Julius_Thread::DoWork(){
