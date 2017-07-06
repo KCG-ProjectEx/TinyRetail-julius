@@ -6,7 +6,7 @@ LIBJULIUS=../julius/libjulius
 
 INCLUDE_PATH=-I./include
 
-ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp
+ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp Julius_Thread.cpp ThreadJob.cpp
 
 CC=g++
 CFLAGS=-g -O2 

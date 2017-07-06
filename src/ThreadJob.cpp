@@ -3,7 +3,7 @@
 CThreadJob::CThreadJob(void)
 {
     m_idThread	= 0;
-    m_fStopFlag	= FALSE;
+    m_fStopFlag	= false;
 }
 
 CThreadJob::~CThreadJob(void)
@@ -17,20 +17,20 @@ void *CThreadJob::ThreadFunc(void *pvoid)
 	pthread_exit(NULL);
 }
 
-BOOL CThreadJob::Begin()
+bool CThreadJob::Begin()
 {
 	int		iHandle;
-	BOOL    fRet;
+	bool    fRet;
 
 	iHandle = pthread_create(&m_idThread, NULL, ThreadFunc, this);
 
-	fRet = (iHandle != 0) ? FALSE : TRUE;
+	fRet = (iHandle != 0) ? false : true;
 	return(fRet);
 }
 
 void CThreadJob::End()
 {
-	m_fStopFlag = TRUE;
+	m_fStopFlag = true;
 	pthread_join(m_idThread, NULL);
 }
 

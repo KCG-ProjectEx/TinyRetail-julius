@@ -1,7 +1,5 @@
-#ifndef _ThreadJob_h_20160613
-#define _ThreadJob_h_20160613
-
-#include	<stdThread.h>
+#pragma once
+#include <pthread.h>
 
 class CThreadJob
 {
@@ -9,7 +7,7 @@ public:
 	CThreadJob(void);
 	~CThreadJob(void);
 
-	BOOL 	Begin();		// スレッドを開始する
+	bool 	Begin();		// スレッドを開始する
 	void 	End();		// スレッドを停止・停止するまで待つ
 
 	static void *ThreadFunc(void *pvoid);
@@ -17,9 +15,7 @@ public:
 	pthread_t    m_idThread;
 
 protected:
-	volatile BOOL	m_fStopFlag;
+	volatile bool	m_fStopFlag;
 
-	virtual UINT 	DoWork(){return 0;};	// 実行するジョブでオーバライド
+	virtual	unsigned int	DoWork(){return 0;};	// 実行するジョブでオーバライド
 };
-
-#endif

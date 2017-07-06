@@ -4,15 +4,15 @@
 
 int main(int argc,char *argv[]){
 
-    // TinyRetail_Julius *pTinyRetail = new TinyRetail_Julius();
+    TinyRetail_Julius *pTinyRetail = new TinyRetail_Julius();
 
-    // int ret = pTinyRetail->Begin();
-    // fprintf(stdout,"Begin() ret = %d",ret);
+    int ret = pTinyRetail->Begin();
+    fprintf(stdout,"Begin() ret = %d",ret);
 
-    // getchar();
+    getchar();
 
-    // ret = pTinyRetail->start_stream();
-    // fprintf(stdout,"start_stream() ret = %d",ret);
+    ret = pTinyRetail->start_stream();
+    fprintf(stdout,"start_stream() ret = %d",ret);
 
     // Post_curl *pPost_curl = new Post_curl();
 

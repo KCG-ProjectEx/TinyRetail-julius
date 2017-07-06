@@ -87,10 +87,14 @@ int TinyRetail_Julius::Begin(){
 @ return
 ******************************************/
 int TinyRetail_Julius::start_stream(){
-    int ret = j_recognize_stream(recog);
-    if (ret == -1) return -1;	/* error(内部でエラーが起こった) */
+    // int ret = j_recognize_stream(recog);
+    // if (ret == -1) return -1;	/* error(内部でエラーが起こった) */
 
-    return ret;
+    pJulius_Thread = new Julius_Thread(recog);
+    pJulius_Thread->Begin();
+
+    // return ret;
+    return 0;
 }
 
 /*****************************************

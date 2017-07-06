@@ -3,8 +3,12 @@
 /* include top Julius library header */
 #include <julius/juliuslib.h>
 
+/* Juliusの認識部を別スレッドにするためのスレッドクラス */
+#include <Julius_Thread.h>
+
 #include <stdio.h>
 
+class Julius_Thread;
 class TinyRetail_Julius{
 
     //※詳細なログが必要なときは定義すること
@@ -26,5 +30,6 @@ public:
 
 private:
     Recog *recog;   //認識コアのインスタンス変数
+    Julius_Thread   *pJulius_Thread;
 
 };
