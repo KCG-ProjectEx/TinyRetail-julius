@@ -30,7 +30,8 @@ private:
 public:
 
 private:
-    Recog *recog;   //認識コアのインスタンス変数
+    Recog   *p_recog;   //認識コアのインスタンス変数
+    Jconf   *p_jconf;
     Julius_Thread   *pJulius_Thread;
 
 };

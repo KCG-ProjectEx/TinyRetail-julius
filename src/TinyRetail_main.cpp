@@ -19,6 +19,8 @@ int main(int argc,char *argv[]){
     pTinyRetail->stop_stream();
     fprintf(stdout,"stop_stream() \n");
 
+    getchar();
+
     //終了
     delete(pTinyRetail);
     pTinyRetail=NULL;

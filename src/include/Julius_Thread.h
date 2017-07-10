@@ -14,7 +14,7 @@ public:
     //基底クラスの関数をオーバーライドする
     virtual unsigned int DoWork();
 
-    bool    fIamZombie;
+    volatile bool    fIamZombie;
 
 private:
 

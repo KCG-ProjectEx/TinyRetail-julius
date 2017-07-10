@@ -17,8 +17,6 @@ TinyRetail_Julius::TinyRetail_Julius(){
 ******************************************/
 TinyRetail_Julius::~TinyRetail_Julius(){
 
-    j_recog_free(recog); // インスタンスを開放する
-
     fprintf(stdout,"See you julius\n");
 }
 
@@ -30,46 +28,54 @@ TinyRetail_Julius::~TinyRetail_Julius(){
     正常終了 : 0, 異常終了 : -1
 ******************************************/
 int TinyRetail_Julius::Begin(){
-    Jconf *jconf;   //設定パラメータ格納エリア
     int ret;
 
     // ログが要らなきゃコメントアウト消して
     //jlog_set_output(NULL);
 
     /*Juliusの設定ファイルである *.jconfファイルを指定する*/
-    // char* jconf_filename[]= {"../kaimono.jconf"};
+    const char* argv[]= {
+            "TinyRetail",
+            "-C",
+            "../kaimono.jconf"
+    };
+    int argc = sizeof(argv)/sizeof(argv[0]);
 
     //指定した*.jconfファイルから設定を読み込む
-    jconf = j_config_load_file_new("../kaimono.jconf");
-    if (jconf == NULL) {		/* error */
+    //juliusはC関数だから、const外して char**にするしかない
+    // j_config_load_file_new()は警告が出てきて使えなかった
+    this->p_jconf = j_config_load_args_new(argc, (char**)argv); 
+
+
+    if (this->p_jconf == NULL) {		/* error */
         fprintf(stderr, "Try `-help' for more information.\n");
         return -1;
     }
 
     //読み込んだ*.jconfから認識器を作成する
-    recog = j_create_instance_from_jconf(jconf);
-    if (recog == NULL) {
+    this->p_recog = j_create_instance_from_jconf(this->p_jconf);
+    if (this->p_recog == NULL) {
         fprintf(stderr, "Error in startup\n");
         return -1;
     }
 
     //各種コールバックの作成
-    callback_add(recog, CALLBACK_EVENT_SPEECH_READY, status_recready, NULL);
-    callback_add(recog, CALLBACK_EVENT_SPEECH_START, status_recstart, NULL);
-    callback_add(recog, CALLBACK_RESULT, output_result, NULL);
+    callback_add(this->p_recog, CALLBACK_EVENT_SPEECH_READY, status_recready, NULL);
+    callback_add(this->p_recog, CALLBACK_EVENT_SPEECH_START, status_recstart, NULL);
+    callback_add(this->p_recog, CALLBACK_RESULT, output_result, NULL);
 
     // マイクなどのオーディオ周りのイニシャライズ
-    if (j_adin_init(recog) == FALSE) {    /* error */
+    if (j_adin_init(this->p_recog) == FALSE) {    /* error */
         return -1;
     }
 
     //エンジンの全設定と全システム情報をログに出力する.
     #ifdef detail_log 
-    j_recog_info(recog);
+    j_recog_info(this->p_recog);
     #endif
 
     //入力デバイスがちゃんと開けているか確認
-    switch(j_open_stream(recog, NULL)) {
+    switch(j_open_stream(this->p_recog, NULL)) {
     case 0:			/* succeeded */
         break;
     case -1:      		/* error */
@@ -90,8 +96,10 @@ int TinyRetail_Julius::Begin(){
 ******************************************/
 int TinyRetail_Julius::start_stream(){
 
+    
+
     // Juliusの認識部を別スレッドで開始する
-    pJulius_Thread = new Julius_Thread(recog);
+    pJulius_Thread = new Julius_Thread(this->p_recog);
     bool ret = pJulius_Thread->Begin();
 
     return ((ret==true) ? 0 : -1);
@@ -105,16 +113,36 @@ int TinyRetail_Julius::start_stream(){
 ******************************************/
 void TinyRetail_Julius::stop_stream(){
 
+
+
+    fprintf(stdout,"j_close_stream()\n");
+
     // 別スレッドで動作しているJulius認識部を終了させる/
-    j_close_stream(recog);
+    int ret = j_close_stream(this->p_recog);
+    printf("j_close_stream ret = %d\n",ret);
 
-    // Juliusの認識部が終了するまで待つ
-    while( pJulius_Thread->fIamZombie==false ); 
+    fprintf(stdout,"fIamZombie==false\n");
 
+    // スレッド停止までまつ
+    while(1){
+        if( pJulius_Thread->fIamZombie==false )break;
+    }
+
+    fprintf(stdout,"pJulius_Thread->End()\n");
     // スレッドの終了
     pJulius_Thread->End();
     delete(pJulius_Thread);
     pJulius_Thread=NULL;
+
+    if(this->p_jconf){
+
+        //これで開放すると、j_recog_freeで落ちる...
+        //j_conf_free(this->p_jconf)
+        this->p_jconf = NULL;
+    }
+
+    j_recog_free(this->p_recog); // インスタンスを開放する
+    this->p_recog = NULL;
 }
 
 /*****************************************
@@ -224,6 +252,7 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
             WORD_ID *seq = s->word;                 //ワード(文を品詞レベルまで分解したもの)の集まりのIDを取得
             int seqnum = s->word_num;               //ワードの数
 
+            printf("------------------------------\n");
             //結果の出力
             printf("sentence%d:", n+1);
             for(int i=0;i<seqnum;i++) printf(" %s", winfo->woutput[seq[i]]); //ワードの数だけ回す
@@ -241,6 +270,7 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
 
             //スコア
             printf("score%d: %f", n+1, s->score);
+            printf("\n");
         }
 
     }
