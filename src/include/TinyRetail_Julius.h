@@ -8,6 +8,12 @@
 
 #include <stdio.h>
 
+//認証結果を一時格納するためのリスト構造
+typedef struct list_WORD_INFO{
+    WORD_INFO           *winfo; //認証結果格納
+    struct list_WORD_INFO  *next;
+}List_WORD_INFO;
+
 class Julius_Thread;
 class TinyRetail_Julius{
 
@@ -26,6 +32,8 @@ private:
     static  void    status_recready(Recog *recog, void *dummy);
     static  void    status_recstart(Recog *recog, void *dummy);
     static  void    output_result(Recog *recog, void *dummy);
+
+    List_WORD_INFO  *firstnode_list_WI,*lastnode_list_WI;
 
 public:
 

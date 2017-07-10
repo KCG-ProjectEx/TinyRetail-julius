@@ -6,7 +6,9 @@
 @ return
 ******************************************/
 TinyRetail_Julius::TinyRetail_Julius(){
+
     fprintf(stdout,"Welcome to julius\n");
+
 }
 
 /*****************************************
@@ -85,6 +87,17 @@ int TinyRetail_Julius::Begin(){
         fprintf(stderr, "failed to begin input stream\n");
         return 0;
     }
+
+    //認証結果を格納するリストの初期化
+    firstnode_list_WI = (List_WORD_INFO*)malloc(sizeof(List_WORD_INFO) );
+    if( firstnode_list_WI == NULL ){ //領域が確保できなかったら
+		fprintf(stderr,"メモリアロケートエラー\n");
+        return -1;
+	}
+    firstnode_list_WI->winfo =  NULL;
+    firstnode_list_WI->next  =  NULL;
+
+    lastnode_list_WI = firstnode_list_WI;
 }
 
 /*****************************************
@@ -275,4 +288,14 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
 
     }
     fflush(stdout); //出力バッファをフラッシュする
+}
+
+bool TinyRetail_Julius::push_result_data(WORD_INFO *winfo){
+
+
+}
+
+bool TinyRetail_Julius::pop_result_data(WORD_INFO *winfo){
+
+
 }
