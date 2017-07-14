@@ -7,12 +7,15 @@
 #include <Julius_Thread.h>
 
 #include <stdio.h>
+#include <string>
 
 //認証結果を一時格納するためのリスト構造
-typedef struct list_WORD_INFO{
-    WORD_INFO           *winfo; //認証結果格納
-    struct list_WORD_INFO  *next;
-}List_WORD_INFO;
+// typedef struct list_WORD_INFO{
+//     WORD_INFO           *winfo; //認証結果格納
+//     struct list_WORD_INFO  *next;
+// }List_WORD_INFO;
+
+// using namespace std;
 
 class Julius_Thread;
 class TinyRetail_Julius{
@@ -33,7 +36,9 @@ private:
     static  void    status_recstart(Recog *recog, void *dummy);
     static  void    output_result(Recog *recog, void *dummy);
 
-    List_WORD_INFO  *firstnode_list_WI,*lastnode_list_WI;
+    //認証結果を一時的に格納するリスト
+    // List_WORD_INFO  *firstnode_list_WI,*lastnode_list_WI;
+    // list<WORD_INFO> list_WI;
 
 public:
 

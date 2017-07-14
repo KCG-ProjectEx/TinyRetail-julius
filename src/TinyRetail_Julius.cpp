@@ -89,15 +89,15 @@ int TinyRetail_Julius::Begin(){
     }
 
     //認証結果を格納するリストの初期化
-    firstnode_list_WI = (List_WORD_INFO*)malloc(sizeof(List_WORD_INFO) );
-    if( firstnode_list_WI == NULL ){ //領域が確保できなかったら
-		fprintf(stderr,"メモリアロケートエラー\n");
-        return -1;
-	}
-    firstnode_list_WI->winfo =  NULL;
-    firstnode_list_WI->next  =  NULL;
+    // firstnode_list_WI = (List_WORD_INFO*)malloc(sizeof(List_WORD_INFO) );
+    // if( firstnode_list_WI == NULL ){ //領域が確保できなかったら
+	// 	fprintf(stderr,"メモリアロケートエラー\n");
+    //     return -1;
+	// }
+    // firstnode_list_WI->winfo =  NULL;
+    // firstnode_list_WI->next  =  NULL;
 
-    lastnode_list_WI = firstnode_list_WI;
+    // lastnode_list_WI = firstnode_list_WI;
 }
 
 /*****************************************
@@ -271,6 +271,22 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
             for(int i=0;i<seqnum;i++) printf(" %s", winfo->woutput[seq[i]]); //ワードの数だけ回す
             printf("\n");
 
+            /* ======================= */
+            // CString_join *sj = new CString_join();
+            // for(int i=0;i<seqnum;i++){
+            //     sj->join_back(winfo->woutput[seq[i]]);
+            // }
+            // push_result_data(sj->req_string());
+            // delete(sj);
+            /* ======================= */  
+            std::string str;
+            for(int i=0;i<seqnum;i++){
+                std::string t_str(winfo->woutput[seq[i]]);
+                str += t_str;
+            }
+            printf("string = %s\n",str.c_str());
+            /* ======================= */              
+
             //音素列
             printf("phseq%d:", n+1);
             put_hypo_phoneme(seq, seqnum, winfo);
@@ -290,12 +306,12 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
     fflush(stdout); //出力バッファをフラッシュする
 }
 
-bool TinyRetail_Julius::push_result_data(WORD_INFO *winfo){
+// bool TinyRetail_Julius::push_result_data(WORD_INFO *winfo){
 
 
-}
+// }
 
-bool TinyRetail_Julius::pop_result_data(WORD_INFO *winfo){
+// bool TinyRetail_Julius::pop_result_data(WORD_INFO *winfo){
 
 
-}
+// }
