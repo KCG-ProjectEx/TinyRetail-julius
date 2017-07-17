@@ -4,9 +4,9 @@ LIBSENT=../julius/libsent
 LIBJULIUS=../julius/libjulius
 #LIBJULIUS=../libjulius
 
-INCLUDE_PATH=-I./include
+INCLUDE_PATH=-I./include -lcurl
 
-ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp Julius_Thread.cpp ThreadJob.cpp
+ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp Julius_Thread.cpp ThreadJob.cpp Post_curl.cpp
 
 CC=g++
 CFLAGS=-g -O2 

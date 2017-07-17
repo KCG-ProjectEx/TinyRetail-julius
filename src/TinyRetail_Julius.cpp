@@ -1,5 +1,6 @@
 #include "TinyRetail_Julius.h"
 
+list<Tag_julius_result> TinyRetail_Julius::list_result;
 /*****************************************
 @ function
 @ parameter
@@ -13,7 +14,6 @@ TinyRetail_Julius::TinyRetail_Julius(){
 
 /*****************************************
 @ function
-    juliusで用いたインスタンスを開放する
 @ parameter
 @ return
 ******************************************/
@@ -32,8 +32,9 @@ TinyRetail_Julius::~TinyRetail_Julius(){
 int TinyRetail_Julius::Begin(){
     int ret;
 
-    // ログが要らなきゃコメントアウト消して
-    //jlog_set_output(NULL);
+#ifndef detail_log
+    jlog_set_output(NULL);
+#endif
 
     /*Juliusの設定ファイルである *.jconfファイルを指定する*/
     const char* argv[]= {
@@ -87,17 +88,6 @@ int TinyRetail_Julius::Begin(){
         fprintf(stderr, "failed to begin input stream\n");
         return 0;
     }
-
-    //認証結果を格納するリストの初期化
-    // firstnode_list_WI = (List_WORD_INFO*)malloc(sizeof(List_WORD_INFO) );
-    // if( firstnode_list_WI == NULL ){ //領域が確保できなかったら
-	// 	fprintf(stderr,"メモリアロケートエラー\n");
-    //     return -1;
-	// }
-    // firstnode_list_WI->winfo =  NULL;
-    // firstnode_list_WI->next  =  NULL;
-
-    // lastnode_list_WI = firstnode_list_WI;
 }
 
 /*****************************************
@@ -208,7 +198,7 @@ void TinyRetail_Julius::put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo){
 
 /*****************************************
 @ function
-    juliusの認証結果を表示させる
+    juliusの認証結果を整理する
 @ parameter
 @ return
 ******************************************/
@@ -252,7 +242,6 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
             printf("<search failed>\n");
             break;
         }
-        /* continue to next process instance */
             continue;
     #endif
 
@@ -265,27 +254,16 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
             WORD_ID *seq = s->word;                 //ワード(文を品詞レベルまで分解したもの)の集まりのIDを取得
             int seqnum = s->word_num;               //ワードの数
 
+            Tag_julius_result   t_r;                
+            ostringstream  oss;                 // ワードをつなぎ合わせる
+                                                // <iostream>のインスタンス変数
+
+        #ifdef detail_log
             printf("------------------------------\n");
             //結果の出力
             printf("sentence%d:", n+1);
             for(int i=0;i<seqnum;i++) printf(" %s", winfo->woutput[seq[i]]); //ワードの数だけ回す
             printf("\n");
-
-            /* ======================= */
-            // CString_join *sj = new CString_join();
-            // for(int i=0;i<seqnum;i++){
-            //     sj->join_back(winfo->woutput[seq[i]]);
-            // }
-            // push_result_data(sj->req_string());
-            // delete(sj);
-            /* ======================= */  
-            std::string str;
-            for(int i=0;i<seqnum;i++){
-                std::string t_str(winfo->woutput[seq[i]]);
-                str += t_str;
-            }
-            printf("string = %s\n",str.c_str());
-            /* ======================= */              
 
             //音素列
             printf("phseq%d:", n+1);
@@ -300,18 +278,85 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
             //スコア
             printf("score%d: %f", n+1, s->score);
             printf("\n");
+        #else
+
+            //結果を構造体に格納する===================================
+            for(int i=0;i<seqnum;i++){
+                oss << winfo->woutput[seq[i]] << flush;
+            }
+            t_r.sentence = oss.str();
+
+            //ossをクリアする
+            oss.str("");
+            oss.clear(stringstream::goodbit);
+
+            //信頼度を構造体に格納する==================================
+            for (int i=0;i<seqnum; i++){
+                oss << (int)(1000 * s->confidence[i]) << flush;
+            }
+            t_r.confidence = oss.str();
+
+            //ossをクリアする
+            oss.str("");
+            oss.clear(stringstream::goodbit);
+
+            //スコアを構造体に格納する===================================
+            t_r.score = s->score;
+
+            push_result_data(&t_r); //結果が格納された構造体をリスト構造へ
+
+        #endif
+
         }
 
     }
     fflush(stdout); //出力バッファをフラッシュする
 }
 
-// bool TinyRetail_Julius::push_result_data(WORD_INFO *winfo){
+/********************************************************
+@ function
+    引数の構造体を最後尾に追加する
+@ parameter
+    Tag_julius_result[in]   :   juliusの認証結果を格納する構造体
+@ return
+*********************************************************/
+void TinyRetail_Julius::push_result_data(Tag_julius_result *p_tag_tmp){
+    
+    //リスト内の最後尾に値を追加する
+    list_result.push_back(*p_tag_tmp);
 
+}
 
-// }
+/********************************************************
+@ function
+    リスト構造から値を取り出し、戻り値でその値を返す。
+@ parameter
+    Tag_julius_result[out]   :   juliusの認証結果を格納する構造体
+@ return
+*********************************************************/
+int TinyRetail_Julius::pop_result_data(Tag_julius_result *p_tag_tmp){
 
-// bool TinyRetail_Julius::pop_result_data(WORD_INFO *winfo){
+    //リスト内の全ての要素を表示する
+    // for(list<Tag_julius_result>::iterator itr = list_result.begin();
+    //         itr != list_result.end(); ++itr){
+        
+    //     cout << "sen =" << itr->sentence << endl;
+    //     cout << "ncon =" << itr->confidence << endl;
+    //     cout << "sco =" << itr->score << endl;
+    // }
 
+    if( list_result.empty() ) return -1;  //リストが空なら
 
-// }
+    // リストにデータがあったら==================================
+    list<Tag_julius_result>::iterator itr = list_result.begin();
+
+    p_tag_tmp->sentence = itr->sentence;
+    p_tag_tmp->confidence = itr->confidence;
+    p_tag_tmp->score = itr->score;
+
+    //リスト内の先頭から要素を削除する
+    list_result.pop_front();
+
+    return 0;
+
+}

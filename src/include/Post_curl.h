@@ -4,7 +4,8 @@
 #include <curl/curl.h>
 /*  ubuntuでcurlを使うには、下記でインストールする :
     sudo apt-get install curl libcurl3 libcurl3-dev
-    includeディレクトリは /usr/include/curl/curl.h         */
+    includeディレクトリは /usr/include/curl/curl.h
+    コンパイル時に　-lcurl と書くと良い                    */
 
 class Post_curl{
 

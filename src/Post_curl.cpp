@@ -41,13 +41,11 @@ int Post_curl::Begin(const char *curl_url){
 
     /* In windows, this will init the winsock stuff */ 
     // グローバルlibcurlの初期化
-    fprintf(stdout,"curl_global_init()\n");    
     int ret = curl_global_init(CURL_GLOBAL_ALL);
     if( ret != 0)return -1;
 
     // ハンドルを取得する
     // ハンドルは再利用することでパフォーマンス向上させる 
-    fprintf(stdout,"curl_easy_init()\n");    
     CURL *p = curl_easy_init();
     if( p == NULL )return -1;
 
@@ -74,6 +72,8 @@ int Post_curl::send_post(const char *post_data){
 
     CURLcode res;
 
+    fprintf(stdout,"post = %s",post_data);
+
     //POSTデータを指定する
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data);
 
@@ -82,7 +82,7 @@ int Post_curl::send_post(const char *post_data){
 
     //エラーチェック
     if(res != CURLE_OK){
-        // fprintf(stderr, "curl_easy_perform() failed: %s\n",curl_easy_strerror(res));
+        fprintf(stderr, "curl_easy_perform() failed: %s\n",curl_easy_strerror(res));
         return -1;
     }
 
