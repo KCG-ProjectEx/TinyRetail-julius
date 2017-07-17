@@ -72,8 +72,6 @@ int Post_curl::send_post(const char *post_data){
 
     CURLcode res;
 
-    fprintf(stdout,"post = %s",post_data);
-
     //POSTデータを指定する
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data);
 
