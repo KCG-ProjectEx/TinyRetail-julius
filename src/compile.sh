@@ -12,6 +12,10 @@ FILE=TinyRetail_main.cpp
 # FILE=Makefile
 # WkDir="~/TinyRetail-julius/src"
 # FILE=Post_curl.cpp
+# WkDir="~/TinyRetail-julius/src"
+# FILE=Post_curl.cpp
+# WkDir="~/TinyRetail-julius/src/include"
+# FILE=include/Post_curl.h
 
 while getopts abi:f: OPT
 #http://shellscript.sunone.me/parameter.html 参考文献
@@ -28,7 +32,8 @@ done
 if [ "$FLG_I" = "TRUE" ]; then
     IP=$VALUE_I
 else
-    IP="192.168.0.12"
+    # IP="192.168.0.12"
+    IP="10.43.0.53"    
 fi
 
 #ファイルを指定

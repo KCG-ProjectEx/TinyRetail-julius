@@ -13,7 +13,8 @@ int main(int argc,char *argv[]){
 
     //==========curl初期化===========
     Post_curl *pPost_curl = new Post_curl();
-    const char *sent_to_url="http://192.168.0.9/tinyRetail_index/get_post2.php";
+    // const char *sent_to_url="http://192.168.0.9/tinyRetail_index/get_post2.php?iam=julius";
+    const char *sent_to_url="http://10.43.0.58/tinyretail_web/dbdev.php?iam=julius";    
     ret = pPost_curl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
@@ -25,11 +26,20 @@ int main(int argc,char *argv[]){
 
     // juliusの認識結果があれば、post(curlを使って)で送信する
     Tag_julius_result tag_tmp;
+    ////////////////////
+    int num;/////////////////////////////////////////////
+    ////////////////////
     while(1){
 
         // juliusに認識データが無ければ、以下は飛ばす
         if(pTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
 
+        /////////////////////////////////////////////////
+        sscanf(tag_tmp.confidence.c_str(), "%d", &num);
+        printf("num = %d\n",num);
+        if(num<900) continue;
+        //////////////////////////////////////////////////
+        
         // ================================================
         string  create_json="";
 
