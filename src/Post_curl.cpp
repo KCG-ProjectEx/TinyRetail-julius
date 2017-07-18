@@ -57,7 +57,25 @@ int Post_curl::Begin(const char *curl_url){
     //POSTの送信先URLを設定する
     curl_easy_setopt(curl, CURLOPT_URL, curl_url);
 
+    //レスポンスデータを扱う関数を設定する(コールバック関数の設定)
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, receive_post_data);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, NULL);
+
     return 0;
+}
+/*****************************************
+@ function
+    httpレスポンスデータを表示させない為の関数
+@ parameter
+    POSTのレスポンスデータ
+@ return
+    正常終了 : 実際に処理されたバイト数,　異常終了 : 0
+******************************************/
+size_t Post_curl::receive_post_data(void* ptr, size_t size, size_t nmemb, void* data){
+    
+    if (size * nmemb == 0) return 0;
+
+    return size * nmemb;
 }
 
 /*****************************************

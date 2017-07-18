@@ -17,6 +17,8 @@ public:
 
 private:
     CURL *curl;
+
+    static size_t receive_post_data(void* ptr, size_t size, size_t nmemb, void* data);
 };
 
 
