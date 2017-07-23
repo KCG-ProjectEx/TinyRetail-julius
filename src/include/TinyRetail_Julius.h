@@ -21,15 +21,15 @@ typedef struct tag_julius_result{
     double   score;      //スコア
 }Tag_julius_result;
 
-class Julius_Thread;
-class TinyRetail_Julius{
+class CJulius_Thread;
+class CTinyRetail_Julius{
 
     //※詳細なログが必要なときは定義すること
     // #define detail_log
 
 public:
-    TinyRetail_Julius();
-    ~TinyRetail_Julius();
+    CTinyRetail_Julius();
+    ~CTinyRetail_Julius();
     int     Begin();
     int     start_stream();
     void    stop_stream();
@@ -48,7 +48,7 @@ public:
 private:
     Recog   *p_recog;   //認識コアのインスタンス変数
     Jconf   *p_jconf;   //juliusの設定情報を格納する
-    Julius_Thread   *pJulius_Thread;    //スレッドを使うためののインスタンス変数
+    CJulius_Thread   *pCJulius_Thread;    //スレッドを使うためののインスタンス変数
 
     // リストのインスタンス(認証結果を一時的に格納する)
     static  list<Tag_julius_result> list_result;
