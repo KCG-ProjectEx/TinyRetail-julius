@@ -7,22 +7,21 @@ int main(int argc,char *argv[]){
     int ret;
 
     //==========julius初期化==========
-    TinyRetail_Julius *pTinyRetail = new TinyRetail_Julius();
-    ret = pTinyRetail->Begin();
+    CTinyRetail_Julius *pCTinyRetail = new CTinyRetail_Julius();
+    ret = pCTinyRetail->Begin();
     fprintf(stdout,"julius Begin() ret = %d\n",ret);
 
     //==========curl初期化===========
-    Post_curl *pPost_curl = new Post_curl();
-    // const char *sent_to_url="http://192.168.0.9/tinyRetail_index/get_post2.php?iam=julius";
+    CPost_curl *pCPost_curl = new CPost_curl();
     const char *sent_to_url="http://10.43.0.58/tinyretail_web/dbdev.php?iam=julius";    
-    ret = pPost_curl->Begin(sent_to_url);
+    ret = pCPost_curl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
 
     getchar();
 
     // juliusの開始(別スレッドで動く)
-    ret = pTinyRetail->start_stream();
+    ret = pCTinyRetail->start_stream();
 
     // juliusの認識結果があれば、post(curlを使って)で送信する
     Tag_julius_result tag_tmp;
@@ -32,7 +31,7 @@ int main(int argc,char *argv[]){
     while(1){
 
         // juliusに認識データが無ければ、以下は飛ばす
-        if(pTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
+        if(pCTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
 
         /////////////////////////////////////////////////
         sscanf(tag_tmp.confidence.c_str(), "%d", &num);
@@ -53,18 +52,18 @@ int main(int argc,char *argv[]){
         cout << "send-post" << create_json << endl;
 
         // postで送信する
-        if((pPost_curl->send_post(create_json.c_str())) == -1){ //異常終了したら
+        if((pCPost_curl->send_post(create_json.c_str())) == -1){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
             break;
         }
     }
 
-    pTinyRetail->stop_stream();
+    pCTinyRetail->stop_stream();
 
     //終了
-    delete(pTinyRetail);
-    delete(pPost_curl);
-    pTinyRetail=NULL;
+    delete(pCTinyRetail);
+    delete(pCPost_curl);
+    pCTinyRetail=NULL;
 
     return 0;
 }

@@ -1,12 +1,12 @@
 #include "TinyRetail_Julius.h"
 
-list<Tag_julius_result> TinyRetail_Julius::list_result;
+list<Tag_julius_result> CTinyRetail_Julius::list_result;
 /*****************************************
 @ function
 @ parameter
 @ return
 ******************************************/
-TinyRetail_Julius::TinyRetail_Julius(){
+CTinyRetail_Julius::CTinyRetail_Julius(){
 
     fprintf(stdout,"Welcome to julius\n");
 
@@ -17,7 +17,7 @@ TinyRetail_Julius::TinyRetail_Julius(){
 @ parameter
 @ return
 ******************************************/
-TinyRetail_Julius::~TinyRetail_Julius(){
+CTinyRetail_Julius::~CTinyRetail_Julius(){
 
     fprintf(stdout,"See you julius\n");
 }
@@ -29,7 +29,7 @@ TinyRetail_Julius::~TinyRetail_Julius(){
 @ return
     正常終了 : 0, 異常終了 : -1
 ******************************************/
-int TinyRetail_Julius::Begin(){
+int CTinyRetail_Julius::Begin(){
     int ret;
 
 #ifndef detail_log
@@ -97,13 +97,13 @@ int TinyRetail_Julius::Begin(){
 @ return
     正常終了 : 0, 異常終了 : -1
 ******************************************/
-int TinyRetail_Julius::start_stream(){
+int CTinyRetail_Julius::start_stream(){
 
     
 
     // Juliusの認識部を別スレッドで開始する
-    pJulius_Thread = new Julius_Thread(this->p_recog);
-    bool ret = pJulius_Thread->Begin();
+    pCJulius_Thread = new CJulius_Thread(this->p_recog);
+    bool ret = pCJulius_Thread->Begin();
 
     return ((ret==true) ? 0 : -1);
 }
@@ -114,7 +114,7 @@ int TinyRetail_Julius::start_stream(){
 @ parameter
 @ return
 ******************************************/
-void TinyRetail_Julius::stop_stream(){
+void CTinyRetail_Julius::stop_stream(){
 
 
 
@@ -128,14 +128,14 @@ void TinyRetail_Julius::stop_stream(){
 
     // スレッド停止までまつ
     while(1){
-        if( pJulius_Thread->fIamZombie==false )break;
+        if( pCJulius_Thread->fIamZombie==false )break;
     }
 
-    fprintf(stdout,"pJulius_Thread->End()\n");
+    fprintf(stdout,"pCJulius_Thread->End()\n");
     // スレッドの終了
-    pJulius_Thread->End();
-    delete(pJulius_Thread);
-    pJulius_Thread=NULL;
+    pCJulius_Thread->End();
+    delete(pCJulius_Thread);
+    pCJulius_Thread=NULL;
 
     if(this->p_jconf){
 
@@ -154,7 +154,7 @@ void TinyRetail_Julius::stop_stream(){
 @ parameter
 @ return
 ******************************************/
-void TinyRetail_Julius::status_recready(Recog *recog, void *dummy){
+void CTinyRetail_Julius::status_recready(Recog *recog, void *dummy){
     if (recog->jconf->input.speech_input == SP_MIC || recog->jconf->input.speech_input == SP_NETAUDIO) {
         fprintf(stderr, "<<< please speak >>>");
     }
@@ -166,7 +166,7 @@ void TinyRetail_Julius::status_recready(Recog *recog, void *dummy){
 @ parameter
 @ return
 ******************************************/
-void TinyRetail_Julius::status_recstart(Recog *recog, void *dummy){
+void CTinyRetail_Julius::status_recstart(Recog *recog, void *dummy){
     if (recog->jconf->input.speech_input == SP_MIC || recog->jconf->input.speech_input == SP_NETAUDIO) {
         fprintf(stderr, "\r                    \r");
     }
@@ -178,7 +178,7 @@ void TinyRetail_Julius::status_recstart(Recog *recog, void *dummy){
 @ parameter
 @ return
 ******************************************/
-void TinyRetail_Julius::put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo){
+void CTinyRetail_Julius::put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo){
     int i,j;
     WORD_ID w;
     static char buf[MAX_HMMNAME_LEN];
@@ -202,7 +202,7 @@ void TinyRetail_Julius::put_hypo_phoneme(WORD_ID *seq, int n, WORD_INFO *winfo){
 @ parameter
 @ return
 ******************************************/
-void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
+void CTinyRetail_Julius::output_result(Recog *recog, void *dummy){
 
     RecogProcess *r;
 
@@ -320,7 +320,7 @@ void TinyRetail_Julius::output_result(Recog *recog, void *dummy){
     Tag_julius_result[in]   :   juliusの認証結果を格納する構造体
 @ return
 *********************************************************/
-void TinyRetail_Julius::push_result_data(Tag_julius_result *p_tag_tmp){
+void CTinyRetail_Julius::push_result_data(Tag_julius_result *p_tag_tmp){
     
     //リスト内の最後尾に値を追加する
     list_result.push_back(*p_tag_tmp);
@@ -334,16 +334,7 @@ void TinyRetail_Julius::push_result_data(Tag_julius_result *p_tag_tmp){
     Tag_julius_result[out]   :   juliusの認証結果を格納する構造体
 @ return
 *********************************************************/
-int TinyRetail_Julius::pop_result_data(Tag_julius_result *p_tag_tmp){
-
-    //リスト内の全ての要素を表示する
-    // for(list<Tag_julius_result>::iterator itr = list_result.begin();
-    //         itr != list_result.end(); ++itr){
-        
-    //     cout << "sen =" << itr->sentence << endl;
-    //     cout << "ncon =" << itr->confidence << endl;
-    //     cout << "sco =" << itr->score << endl;
-    // }
+int CTinyRetail_Julius::pop_result_data(Tag_julius_result *p_tag_tmp){
 
     if( list_result.empty() ) return -1;  //リストが空なら
 

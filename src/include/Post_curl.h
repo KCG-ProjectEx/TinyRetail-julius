@@ -7,11 +7,11 @@
     includeディレクトリは /usr/include/curl/curl.h
     コンパイル時に　-lcurl と書くと良い                    */
 
-class Post_curl{
+class CPost_curl{
 
 public:
-    Post_curl();
-    ~Post_curl();
+    CPost_curl();
+    ~CPost_curl();
     int Begin(const char *curl_url);
     int send_post(const char *post_data);
 
