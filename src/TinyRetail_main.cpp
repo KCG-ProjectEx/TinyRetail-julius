@@ -1,6 +1,9 @@
 #include <TinyRetail_Julius.h>
 #include <Post_curl.h>
 #include <stdio.h>
+#include <string>
+
+using namespace std;
 
 int main(int argc,char *argv[]){
 
@@ -13,12 +16,13 @@ int main(int argc,char *argv[]){
 
     //==========curl初期化===========
     CPost_curl *pCPost_curl = new CPost_curl();
-    const char *sent_to_url="http://10.43.0.58/tinyretail_web/dbdev.php?iam=julius";    
+    //const char *sent_to_url="http://10.43.0.6/dbconnect.php?iam=julius";    
+    const char *sent_to_url="http://192.168.11.110/dbconnect.php?iam=julius";    
     ret = pCPost_curl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
 
-    getchar();
+    //getchar();
 
     // juliusの開始(別スレッドで動く)
     ret = pCTinyRetail->start_stream();
@@ -26,7 +30,9 @@ int main(int argc,char *argv[]){
     // juliusの認識結果があれば、post(curlを使って)で送信する
     Tag_julius_result tag_tmp;
     ////////////////////
-    int num;/////////////////////////////////////////////
+    int word_rbd;////////////////////
+    int word_id;////////////////
+    char word_str[100];/////////
     ////////////////////
     while(1){
 
@@ -34,28 +40,39 @@ int main(int argc,char *argv[]){
         if(pCTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
 
         /////////////////////////////////////////////////
-        sscanf(tag_tmp.confidence.c_str(), "%d", &num);
-        printf("num = %d\n",num);
-        if(num<900) continue;
+        sscanf(tag_tmp.confidence.c_str(), "%d", &word_rbd);
+        printf("word_rbd = %d\n",word_rbd);
+        if(word_rbd<900) continue;
         //////////////////////////////////////////////////
         
-        // ================================================
-        string  create_json="";
+        sscanf(tag_tmp.sentence.c_str(),"%d%s",&word_id,word_str);
+        fprintf(stdout,"word_str = %s\n",word_str);
 
-        // 右のようなJSONを作成する　{"word_id":"送るデータ"}
-        create_json += "{\"word_id\":\"";
-        create_json += tag_tmp.sentence;
-        create_json += "\"}";
+        //////////////////////////////////////////////////
         // ================================================
+        stringstream  create_json;
+
+        // 右のようなJSONを作成する　{"word_id":"送るデータ/"}
+        create_json << "{\"mic_id\":\"1\",";
+        create_json << "\"word_id\":\"";
+        create_json << word_id+53;
+        create_json << "\",\"word_rbd\":\"";
+        create_json << word_rbd;
+        create_json << "\"}";
+        // ================================================
+
+        string send_json = create_json.str();
 
         // postで送るデータを表示する
-        cout << "send-post" << create_json << endl;
+        cout << "send-post" << send_json.c_str() << endl;
 
+        #if 1
         // postで送信する
-        if((pCPost_curl->send_post(create_json.c_str())) == -1){ //異常終了したら
+        if((pCPost_curl->send_post(send_json.c_str())) == -1){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
             break;
         }
+        #endif
     }
 
     pCTinyRetail->stop_stream();
