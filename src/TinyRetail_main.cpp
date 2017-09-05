@@ -11,7 +11,7 @@ int main(int argc,char *argv[]){
 
     //==========julius初期化==========
     CTinyRetail_Julius *pCTinyRetail = new CTinyRetail_Julius();
-    ret = pCTinyRetail->Begin();
+    ret = pCTinyRetail->Begin(argc, argv);
     fprintf(stdout,"julius Begin() ret = %d\n",ret);
 
     //==========curl初期化===========

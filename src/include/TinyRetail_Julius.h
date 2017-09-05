@@ -30,7 +30,7 @@ class CTinyRetail_Julius{
 public:
     CTinyRetail_Julius();
     ~CTinyRetail_Julius();
-    int     Begin();
+    int     Begin(int argc,char *argv[]);
     int     start_stream();
     void    stop_stream();
     int     pop_result_data(Tag_julius_result *p_tag_tmp);
