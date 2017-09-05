@@ -49,40 +49,26 @@ int main(int argc,char *argv[]){
         sscanf(tag_tmp.sentence.c_str(),"%d%s",&word_id,word_str);
         fprintf(stdout,"word_str = %s\n",word_str);
 
-        //////////////////////////////////////////////////
-        // ================================================
-        stringstream  create_json;
-
-        // 右のようなJSONを作成する　{"word_id":"送るデータ/"}
-        create_json << "{\"mic_id\":\"1\",";
-        create_json << "\"word_id\":\"";
-        create_json << word_id+53;
-        create_json << "\",\"word_rbd\":\"";
-        create_json << word_rbd;
-        create_json << "\"}";
-        // ================================================
-
-        string send_json = create_json.str();
-
-        // postで送るデータを表示する
-        cout << "send-post" << send_json.c_str() << endl;
-
+        // 受け取ったデータをjson形式に変換
         CJSON *pCJSON = new CJSON();
         pCJSON->push("mic_id","1");
         pCJSON->push("word_id",word_id+53);
         pCJSON->push("word_rbd",word_rbd);
 
+        // postで送るデータを表示する
         cout << "send-post-JSON" << pCJSON->pop() << endl;
 
         delete(pCJSON);
 
         #if 0
         // postで送信する
-        if((pCPost_curl->send_post(send_json.c_str())) == -1){ //異常終了したら
+        if((pCPost_curl->send_post(pCJSON->pop())) == -1){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
             break;
         }
         #endif
+
+        
     }
 
     pCTinyRetail->stop_stream();
