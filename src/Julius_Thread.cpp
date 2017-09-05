@@ -1,19 +1,19 @@
 #include <Julius_Thread.h>
 
-Julius_Thread::Julius_Thread(Recog *tmp){
+CJulius_Thread::CJulius_Thread(Recog *tmp){
 
     fprintf(stdout,"Welcome to Julius_Thread\n");
     
     m_recog = tmp;
 }
 
-Julius_Thread::~Julius_Thread(){
+CJulius_Thread::~CJulius_Thread(){
 
     fprintf(stdout,"See you Julius_Thread\n");
 
 }
 
-unsigned int Julius_Thread::DoWork(){
+unsigned int CJulius_Thread::DoWork(){
 
     fprintf(stdout,"START : julius_stream\n");
     fIamZombie = false; //ゾンビではない
