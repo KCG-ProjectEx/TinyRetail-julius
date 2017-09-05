@@ -26,7 +26,7 @@ int CJSON::push(const string& id, const string& value)
 
 int CJSON::push(const string& id, const int& value)
 {
-	this->data += '"' + id + '"' + ":" + '"' + value + '"' + ",";
+	this->data += '"' + id + '"' + ":" + '"' + std::to_string(value) + '"' + ",";
 	return 0;
 }
 
