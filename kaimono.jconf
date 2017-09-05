@@ -13,4 +13,5 @@
 -input mic
 -zmeanframe
 -rejectshort 800
+-plugindir plugin
 #-charconv EUC-JP UTF-8
