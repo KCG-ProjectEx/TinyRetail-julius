@@ -5,13 +5,17 @@
 
 using namespace std;
 
-int main(int argc,char *argv[]){
+int main(int argc,const char *argv[]){
 
     int ret;
 
+    if(argc > 1){
+        fprintf(stdout, "引数を指定してください\n");
+    }
+
     //==========julius初期化==========
     CTinyRetail_Julius *pCTinyRetail = new CTinyRetail_Julius();
-    ret = pCTinyRetail->Begin();
+    ret = pCTinyRetail->Begin(argc, argv);
     fprintf(stdout,"julius Begin() ret = %d\n",ret);
 
     //==========curl初期化===========
@@ -66,7 +70,7 @@ int main(int argc,char *argv[]){
         // postで送るデータを表示する
         cout << "send-post" << send_json.c_str() << endl;
 
-        #if 1
+        #if 0
         // postで送信する
         if((pCPost_curl->send_post(send_json.c_str())) == -1){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
