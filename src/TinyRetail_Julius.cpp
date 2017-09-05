@@ -29,7 +29,7 @@ CTinyRetail_Julius::~CTinyRetail_Julius(){
 @ return
     正常終了 : 0, 異常終了 : -1
 ******************************************/
-int CTinyRetail_Julius::Begin(int argc, const char *argv[]){
+int CTinyRetail_Julius::Begin(){
     int ret;
 
 #ifndef detail_log
@@ -37,12 +37,12 @@ int CTinyRetail_Julius::Begin(int argc, const char *argv[]){
 #endif
 
     /*Juliusの設定ファイルである *.jconfファイルを指定する*/
-    // const char* argv[]= {
-    //         "TinyRetail",
-    //         "-C",
-    //         "../kaimono.jconf"
-    // };
-    // int argc = sizeof(argv)/sizeof(argv[0]);
+    const char* argv[]= {
+            "TinyRetail",
+            "-C",
+            "../kaimono.jconf"
+    };
+    int argc = sizeof(argv)/sizeof(argv[0]);
 
     //指定した*.jconfファイルから設定を読み込む
     //juliusはC関数だから、const外して char**にするしかない

@@ -5,17 +5,13 @@
 
 using namespace std;
 
-int main(int argc,const char *argv[]){
+int main(int argc,char *argv[]){
 
     int ret;
 
-    if(argc > 1){
-        fprintf(stdout, "引数を指定してください\n");
-    }
-
     //==========julius初期化==========
     CTinyRetail_Julius *pCTinyRetail = new CTinyRetail_Julius();
-    ret = pCTinyRetail->Begin(argc, argv);
+    ret = pCTinyRetail->Begin();
     fprintf(stdout,"julius Begin() ret = %d\n",ret);
 
     //==========curl初期化===========
