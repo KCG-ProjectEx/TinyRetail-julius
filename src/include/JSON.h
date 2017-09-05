@@ -11,6 +11,7 @@ public:
 	CJSON();
 	~CJSON();
 	int push(const string& id, const string& value);
+	int push(const string& id, const int& value);	
 	string pop();
 	int init();
 	string data;

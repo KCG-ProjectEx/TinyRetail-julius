@@ -2,6 +2,7 @@
 #include <Post_curl.h>
 #include <stdio.h>
 #include <string>
+#include <JSON.h>
 
 using namespace std;
 
@@ -65,6 +66,15 @@ int main(int argc,char *argv[]){
 
         // postで送るデータを表示する
         cout << "send-post" << send_json.c_str() << endl;
+
+        CJSON *pCJSON = new CJSON();
+        pCJSON->push("mic_id","1");
+        pCJSON->push("word_id",word_id+53);
+        pCJSON->push("word_rbd",word_rbd);
+
+        cout << "send-post-JSON" << pCJSON->pop() << endl;
+
+        delete(pCJSON);
 
         #if 0
         // postで送信する

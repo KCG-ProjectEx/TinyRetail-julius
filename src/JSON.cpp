@@ -24,6 +24,12 @@ int CJSON::push(const string& id, const string& value)
 	return 0;
 }
 
+int CJSON::push(const string& id, const int& value)
+{
+	this->data += '"' + id + '"' + ":" + '"' + value + '"' + ",";
+	return 0;
+}
+
 string CJSON::pop()
 {
 	this->data.pop_back();

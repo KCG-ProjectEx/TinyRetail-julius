@@ -4,7 +4,7 @@ LIBSENT=../julius/libsent
 LIBJULIUS=../julius/libjulius
 #LIBJULIUS=../libjulius
 
-INCLUDE_PATH=-I./include -lcurl
+INCLUDE_PATH=-I./include -lcurl -std=c++11
 
 ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp Julius_Thread.cpp ThreadJob.cpp Post_curl.cpp
 
