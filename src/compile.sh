@@ -33,7 +33,7 @@ if [ "$FLG_I" = "TRUE" ]; then
     IP=$VALUE_I
 else
     # IP="192.168.0.12"
-    IP="10.43.0.53"    
+    IP="tinyretail-client"    
 fi
 
 #ファイルを指定

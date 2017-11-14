@@ -17,8 +17,7 @@ int main(int argc,char *argv[]){
 
     //==========curl初期化===========
     CPost_curl *pCPost_curl = new CPost_curl();
-    //const char *sent_to_url="http://10.43.0.6/dbconnect.php?iam=julius";    
-    const char *sent_to_url="http://192.168.11.110/dbconnect.php?iam=julius";    
+    const char *sent_to_url="http://tinyretail/dbconnect.php?iam=julius";    
     ret = pCPost_curl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
@@ -43,7 +42,7 @@ int main(int argc,char *argv[]){
         /////////////////////////////////////////////////
         sscanf(tag_tmp.confidence.c_str(), "%d", &word_rbd);
         printf("word_rbd = %d\n",word_rbd);
-        if(word_rbd<900) continue;
+        // if(word_rbd<900) continue;
         //////////////////////////////////////////////////
         
         sscanf(tag_tmp.sentence.c_str(),"%d%s",&word_id,word_str);

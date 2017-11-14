@@ -152,7 +152,7 @@ void CTinyRetail_Julius::status_recready(Recog *recog, void *dummy){
 
 /*****************************************
 @ function
-    音声入力が鳥がされた時に呼び出されるコールバック
+    音声入力がトリガーされた時に呼び出されるコールバック
 @ parameter
 @ return
 ******************************************/
