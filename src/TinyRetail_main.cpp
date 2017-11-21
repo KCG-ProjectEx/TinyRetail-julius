@@ -39,25 +39,26 @@ int main(int argc,char *argv[]){
         // juliusに認識データが無ければ、以下は飛ばす
         if(pCTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
 
-        /////////////////////////////////////////////////
-        sscanf(tag_tmp.confidence.c_str(), "%d", &word_rbd);
-        printf("word_rbd = %d\n",word_rbd);
-        // if(word_rbd<900) continue;
-        //////////////////////////////////////////////////
-        
-        sscanf(tag_tmp.sentence.c_str(),"%d%s",&word_id,word_str);
-        fprintf(stdout,"word_str = %s\n",word_str);
+        // /////////////////////////////////////////////////
+        // sscanf(tag_tmp.confidence.c_str(), "%d", &word_rbd);
+        // printf("word_rbd = %d\n",word_rbd);
+        // // if(word_rbd<900) continue;
+        // //////////////////////////////////////////////////
+        // 
+        // sscanf(tag_tmp.sentence.c_str(),"%d%s",&word_id,word_str);
+        // fprintf(stdout,"word_str = %s\n",word_str);
 
-        // 受け取ったデータをjson形式に変換
-        CJSON *pCJSON = new CJSON();
-        pCJSON->push("mic_id","1");
-        pCJSON->push("word_id",word_id+53);
-        pCJSON->push("word_rbd",word_rbd);
+        // // 受け取ったデータをjson形式に変換
+        // CJSON *pCJSON = new CJSON();
+        // pCJSON->push("mic_id","1");
+        // pCJSON->push("word_id",word_id+53);
+        // pCJSON->push("word_rbd",word_rbd);
 
-        // postで送るデータを表示する
-        cout << "send-post-JSON" << pCJSON->pop() << endl;
+        // // postで送るデータを表示する
+        // cout << "send-post-JSON" << pCJSON->pop() << endl;
 
-        delete(pCJSON);
+        // delete(pCJSON);
+        cout << tag_tmp.sentence << endl;
 
         #if 0
         // postで送信する

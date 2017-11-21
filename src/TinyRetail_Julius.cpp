@@ -248,7 +248,7 @@ void CTinyRetail_Julius::output_result(Recog *recog, void *dummy){
             ostringstream  oss;                 // ワードをつなぎ合わせる
                                                 // <iostream>のインスタンス変数
 
-        #ifdef detail_log
+        #if 0 
             printf("------------------------------\n");
             //結果の出力
             printf("sentence%d:", n+1);
@@ -275,6 +275,8 @@ void CTinyRetail_Julius::output_result(Recog *recog, void *dummy){
                 oss << winfo->woutput[seq[i]] << flush;
             }
             t_r.sentence = oss.str();
+
+            cout << t_r.sentence << endl;
 
             //ossをクリアする
             oss.str("");
