@@ -271,9 +271,14 @@ void CTinyRetail_Julius::output_result(Recog *recog, void *dummy){
         #else
 
             //結果を構造体に格納する===================================
-            for(int i=0; i<seqnum; i++){
-                t_r.sentence.push_back(winfo->woutput[seq[i]]);
+            for(int i=0;i<seqnum;i++){
+                oss << winfo->woutput[seq[i]] << flush;
             }
+
+            t_r.sentence = oss.str();
+
+            cout << t_r.sentence << endl;
+
 
             //ossをクリアする
             oss.str("");

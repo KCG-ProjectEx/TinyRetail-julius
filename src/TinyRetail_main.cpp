@@ -1,7 +1,7 @@
 #include <TinyRetail_Julius.h>
 #include <Post_curl.h>
 #include <JSON.h>
-#include <negaPosi.h>
+// #include <negaPosi.h>
 
 #include <stdio.h>
 #include <string>
@@ -23,9 +23,9 @@ int main(int argc,char *argv[]){
     ret = pCPost_curl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
-    //==========negaPosi初期化==========
-    CnegaPosi *pCnegaPosi = new CnegaPosi("./src/dat/pn.dic
-    ");
+    // //==========negaPosi初期化==========
+    // CnegaPosi *pCnegaPosi = new CnegaPosi("./src/dat/pn.dic
+    // ");
 
 
     //getchar();
@@ -45,12 +45,14 @@ int main(int argc,char *argv[]){
         // juliusに認識データが無ければ、以下は飛ばす
         if(pCTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
 
-        pCnegaPosi->cmp(tag_tmp.sentence);
+        cout << tag_tmp.sentence << endl;
 
-        // 構造体の出力(debug)
-        for(auto itr = tag_tmp.sentence.begin(); itr != tag_tmp.sentence.end(); ++itr) {
-            cout << ": " << *itr << endl;
-        }
+        // pCnegaPosi->cmp(tag_tmp.sentence);
+
+        // // 構造体の出力(debug)
+        // for(auto itr = tag_tmp.sentence.begin(); itr != tag_tmp.sentence.end(); ++itr) {
+        //     cout << ": " << *itr << endl;
+        // }
 
         // /////////////////////////////////////////////////
         // sscanf(tag_tmp.confidence.c_str(), "%d", &word_rbd);
