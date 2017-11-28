@@ -45,7 +45,7 @@ int main(int argc,char *argv[]){
         // juliusに認識データが無ければ、以下は飛ばす
         if(pCTinyRetail->pop_result_data(&tag_tmp) == -1) continue;
 
-        cout << tag_tmp.sentence << endl;
+        // cout << tag_tmp.sentence << endl;
 
         // pCnegaPosi->cmp(tag_tmp.sentence);
 
@@ -64,20 +64,22 @@ int main(int argc,char *argv[]){
         // fprintf(stdout,"word_str = %s\n",word_str);
 
         // // 受け取ったデータをjson形式に変換
-        // CJSON *pCJSON = new CJSON();
-        // pCJSON->push("mic_id","1");
+        CJSON *pCJSON = new CJSON();
+        pCJSON->push("mic_id","1");
+        pCJSON->push("sentence",tag_tmp.sentence);
+        pCJSON->push("favor","pojinega");
         // pCJSON->push("word_id",word_id+53);
         // pCJSON->push("word_rbd",word_rbd);
 
         // // postで送るデータを表示する
-        // cout << "send-post-JSON" << pCJSON->pop() << endl;
+        cout << "send-post-JSON" << pCJSON->pop() << endl;
 
-        // delete(pCJSON);
+        delete(pCJSON);
 
         
 
 
-        #if 0
+        #if 1
         // postで送信する
         if((pCPost_curl->send_post(pCJSON->pop())) == -1){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
