@@ -6,7 +6,9 @@ LIBJULIUS=../julius/libjulius
 
 INCLUDE_PATH=-I./include -lcurl -std=c++11
 
-ALL_FILE=TinyRetail_Julius.cpp TinyRetail_main.cpp Julius_Thread.cpp ThreadJob.cpp Post_curl.cpp JSON.cpp
+OBJS=TinyRetail_Julius.o TinyRetail_main.o Julius_Thread.o ThreadJob.o Post_curl.o JSON.o split.o negaPosi.o
+
+SRCS=$(OBJS:%.o=%.cpp)
 
 CC=g++
 CFLAGS=-g -O2 
@@ -38,9 +40,8 @@ LDFLAGS= -L$(LIBJULIUS) `$(LIBJULIUS)/libjulius-config --libs` -L$(LIBSENT) `$(L
 # 	$(RM) julius-simple
 
 all: tinyRetail
-
-tinyRetail: $(ALL_FILE)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_PATH) -o TinyRetail $(ALL_FILE) $(LDFLAGS)
+tinyRetail: $(CBJS) $(SRCS)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_PATH) -o TinyRetail $(SRCS) $(LDFLAGS)
 
 clean:
 	$(RM) *.o *.bak *~ core TAGS

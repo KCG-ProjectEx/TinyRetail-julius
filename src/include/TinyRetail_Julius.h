@@ -12,13 +12,14 @@
 #include <sstream>
 #include <iostream>
 #include <list>
+#include <vector> 
 
 using namespace std;
 
 typedef struct tag_julius_result{
-    string   sentence;   //認証結果
-    string   confidence; //信頼度
-    double   score;      //スコア
+    vector<string>      sentence;   //認証結果
+    string              confidence; //信頼度
+    double              score;      //スコア
 }Tag_julius_result;
 
 class CJulius_Thread;

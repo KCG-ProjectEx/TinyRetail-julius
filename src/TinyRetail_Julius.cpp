@@ -1,4 +1,4 @@
-#include "TinyRetail_Julius.h"
+#include <TinyRetail_Julius.h>
 
 list<Tag_julius_result> CTinyRetail_Julius::list_result;
 /*****************************************
@@ -248,7 +248,7 @@ void CTinyRetail_Julius::output_result(Recog *recog, void *dummy){
             ostringstream  oss;                 // ワードをつなぎ合わせる
                                                 // <iostream>のインスタンス変数
 
-        #if 0 
+        #if 0
             printf("------------------------------\n");
             //結果の出力
             printf("sentence%d:", n+1);
@@ -271,12 +271,9 @@ void CTinyRetail_Julius::output_result(Recog *recog, void *dummy){
         #else
 
             //結果を構造体に格納する===================================
-            for(int i=0;i<seqnum;i++){
-                oss << winfo->woutput[seq[i]] << flush;
+            for(int i=0; i<seqnum; i++){
+                t_r.sentence.push_back(winfo->woutput[seq[i]]);
             }
-            t_r.sentence = oss.str();
-
-            cout << t_r.sentence << endl;
 
             //ossをクリアする
             oss.str("");

@@ -2,20 +2,8 @@
 
 USER="pi"
 PW="yasuda"
-# WkDir="~/TinyRetail-julius/src"
-# FILE=TinyRetail_Julius.cpp
-# WkDir="~/TinyRetail-julius/src/include"
-# FILE=include/TinyRetail_Julius.h
-WkDir="~/TinyRetail-julius/src"
-FILE=TinyRetail_main.cpp
-# WkDir="~/TinyRetail-julius/src"
-# FILE=Makefile
-# WkDir="~/TinyRetail-julius/src"
-# FILE=Post_curl.cpp
-# WkDir="~/TinyRetail-julius/src"
-# FILE=Post_curl.cpp
-# WkDir="~/TinyRetail-julius/src/include"
-# FILE=include/Post_curl.h
+WkDir="~/TinyRetail-julius/"
+FILE="./src"
 
 while getopts abi:f: OPT
 #http://shellscript.sunone.me/parameter.html 参考文献
@@ -46,11 +34,13 @@ if [ "$FLG_F" = "TRUE" ]; then
     fi
 fi
 
+# scp -r ./src pi@tinyretail-client:~/TinyRetail-julius/
+
 #ファイル転送するなら
 if [ "$FLG_A" = "TRUE" ]; then
     expect -c "
     set timeout 5
-    spawn scp -r ${FILE} ${USER}@${IP}:${WkDir}
+    spawn spawn scp -r ${FILE} ${USER}@${IP}:${WkDir}
     expect \"(yes/no)?\" {
         send \"yes\n\"
         expect \"password:\"
