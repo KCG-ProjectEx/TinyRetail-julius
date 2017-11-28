@@ -24,8 +24,7 @@ int main(int argc,char *argv[]){
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
     //==========negaPosi初期化==========
-    CnegaPosi *pCnegaPosi = new CnegaPosi("./src/dat/pn.dic
-    ");
+    CnegaPosi *pCnegaPosi = new CnegaPosi("./src/dat/pn.dic");
 
 
     //getchar();
