@@ -4,9 +4,11 @@ LIBSENT=../julius/libsent
 LIBJULIUS=../julius/libjulius
 #LIBJULIUS=../libjulius
 
-INCLUDE_PATH=-I./include -lcurl -std=c++11
+INCLUDE_PATH=-I./include
 
-OBJS=TinyRetail_Julius.o TinyRetail_main.o Julius_Thread.o ThreadJob.o Post_curl.o JSON.o split.o negaPosi.o
+OPTION=-lcurl -std=c++11
+
+OBJS=TinyRetail_Julius.o TinyRetail_main.o Julius_Thread.o ThreadJob.o Curl.o JSON.o split.o negaPosi.o
 
 SRCS=$(OBJS:%.o=%.cpp)
 
@@ -41,7 +43,7 @@ LDFLAGS= -L$(LIBJULIUS) `$(LIBJULIUS)/libjulius-config --libs` -L$(LIBSENT) `$(L
 
 all: tinyRetail
 tinyRetail: $(CBJS) $(SRCS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_PATH) -o TinyRetail $(SRCS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_PATH) -o TinyRetail $(SRCS) $(LDFLAGS) $(OPTION)
 
 clean:
 	$(RM) *.o *.bak *~ core TAGS

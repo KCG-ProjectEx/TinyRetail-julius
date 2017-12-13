@@ -18,9 +18,9 @@ int main(int argc,char *argv[]){
     fprintf(stdout,"julius Begin() ret = %d\n",ret);
 
     //==========curl初期化===========
-    CPost_curl *pCPost_curl = new CPost_curl();
+    CCurl *pCCurl = new CCurl();
     const char *sent_to_url="http://tinyretail/dbconnect.php?iam=julius";    
-    ret = pCPost_curl->Begin(sent_to_url);
+    ret = pCCurl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
     // //==========negaPosi初期化==========
@@ -81,7 +81,7 @@ int main(int argc,char *argv[]){
 
         #if 1
         // postで送信する
-        if((pCPost_curl->send_post(pCJSON->pop())) == -1){ //異常終了したら
+        if((pCCurl->send_post(pCJSON->pop())) == -1){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
             break;
         }
@@ -94,7 +94,7 @@ int main(int argc,char *argv[]){
 
     //終了
     delete(pCTinyRetail);
-    delete(pCPost_curl);
+    delete(pCCurl);
     pCTinyRetail=NULL;
 
     return 0;
