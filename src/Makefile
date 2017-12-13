@@ -4,7 +4,7 @@ LIBSENT=../julius/libsent
 LIBJULIUS=../julius/libjulius
 #LIBJULIUS=../libjulius
 
-INCLUDE_PATH=-I./include
+INCLUDE_PATH=-I./include -I./lib/boost_1_65_1
 
 OPTION=-lcurl -std=c++11
 
