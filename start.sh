@@ -1,3 +1,3 @@
 #!/bin/sh
 
-LSADEV="plughw:0,0" ./src/TinyRetail -C ./kaimono.jconf
+/home/pi/TinyRetail-julius/src/TinyRetail -C /home/pi/TinyRetail-julius/kaimono.jconf

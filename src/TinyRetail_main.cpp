@@ -19,7 +19,8 @@ int main(int argc,char *argv[]){
 
     //==========curl初期化===========
     CCurl *pCCurl = new CCurl();
-    const char *sent_to_url="http://tinyretail/dbconnect.php?iam=julius";    
+    // const char *sent_to_url="http://tinyretail/dbconnect.php?iam=julius";    
+    const char *sent_to_url="http://192.168.11.110/dbconnect.php?iam=julius";
     ret = pCCurl->Begin(sent_to_url);
     fprintf(stdout,"curl Begin() ret = %d\n",ret);
 
@@ -74,11 +75,6 @@ int main(int argc,char *argv[]){
         // // postで送るデータを表示する
         cout << "send-post-JSON" << pCJSON->pop() << endl;
 
-        delete(pCJSON);
-
-        
-
-
         #if 1
         // postで送信する
         if((pCCurl->send_post(pCJSON->pop())) == -1){ //異常終了したら
@@ -86,6 +82,8 @@ int main(int argc,char *argv[]){
             break;
         }
         #endif
+
+        delete(pCJSON);        
 
         
     }
