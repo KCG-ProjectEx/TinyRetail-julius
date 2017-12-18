@@ -82,7 +82,7 @@ int main(int argc,char *argv[]){
         std::string strReq;
         // strReq += tag_tmp.sentence;
 
-        // std::string res; 
+        std::string res; 
         // res = pCCurlNegaPoji->send_get(strReq);
 
         strReq = pCCurlNegaPoji->urlEncode(tag_tmp.sentence);

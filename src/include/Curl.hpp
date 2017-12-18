@@ -16,7 +16,7 @@ public:
     bool Begin(string to_url);
     string send_get(string data); 
     string send_post(string data);
-
+    string urlEncode(string data);
 private:
     static size_t callbackWrite(char *ptr, size_t size, size_t nmemb, string *stream);
 
