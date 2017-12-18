@@ -11,7 +11,7 @@
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
 
-using namespace std;
+using namespace boost::property_tree;
 
 int main(int argc,char *argv[]){
 
@@ -34,7 +34,7 @@ int main(int argc,char *argv[]){
     ret = pCCurlNegaPoji->Begin("https://api.apitore.com/api/11/sentiment/predict");
     fprintf(stdout,"curl negapoji Begin() ret = %d\n",ret);    
     // tokenを追記
-    string reqDef = "access_token=c239e412-dafa-41b2-a2f8-e273abbc934f";
+    std::string reqDef = "access_token=c239e412-dafa-41b2-a2f8-e273abbc934f";
     // 識別データの追記
     reqDef += "&text=";
     
@@ -78,14 +78,14 @@ int main(int argc,char *argv[]){
 /***************************** */
 
         // 受け取ったデータをnega poji APIに投げる
-        string strReq = reqDef;
+        std::string strReq = reqDef;
         strReq += tag_tmp.sentence;
 
-        string res; 
+        std::string res; 
         res = pCCurlNegaPoji->send_get(strReq);
 
         // string型をstring stream型に変更
-        stringstream stmData;
+        std::stringstream stmData;
         stmData << res;
 
         // jsonデータを得るために、ptreeに格納する
@@ -93,18 +93,18 @@ int main(int argc,char *argv[]){
         read_json(stmData, pt);
 
         // jsonデータの獲得
-        if (boost::optional<string> str = pt.get_optional<string>("predict.sentiment")) {
-            cout << "sentiment : " << str.get() << endl;
+        if (boost::optional<std::string> str = pt.get_optional<std::string>("predict.sentiment")) {
+            std::cout << "sentiment : " << str.get() << std::endl;
             res = str.get();
         }
         else {
-            cout << "sentiment is nothing" << endl;
+            cstd::out << "sentiment is nothing" << std::endl;
         }
         if (boost::optional<double> value = pt.get_optional<double>("predict.score")) {
-            cout << "score : " << value.get() << endl;
+            std::cout << "score : " << value.get() << std::endl;
         }
         else {
-            cout << "score is nothing" << endl;
+            std::out << "score is nothing" << endl;
         }
 
 /***************************** */
@@ -118,7 +118,7 @@ int main(int argc,char *argv[]){
         // pCJSON->push("word_rbd",word_rbd);
 
         // // postで送るデータを表示する
-        cout << "send-post-JSON" << pCJSON->pop() << endl;
+        std::cout << "send-post-JSON" << pCJSON->pop() << std::endl;
 
         #if 0
         // postで送信する
@@ -138,6 +138,7 @@ int main(int argc,char *argv[]){
     //終了
     delete(pCTinyRetail);
     delete(pCCurl);
+    delete(pCCurlNegaPoji);
     pCTinyRetail=NULL;
 
     return 0;
