@@ -1,4 +1,6 @@
-#pragma once
+// #pragma once
+#ifndef __Curl_H_
+#define __Curl_H_
 
 #include <string> 
 #include <iostream> 
@@ -23,3 +25,5 @@ private:
     string m_url;
 
 };
+
+#endif
