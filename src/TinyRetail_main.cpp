@@ -104,7 +104,7 @@ int main(int argc,char *argv[]){
             std::cout << "score : " << value.get() << std::endl;
         }
         else {
-            std::out << "score is nothing" << std::endl;
+            std::cout << "score is nothing" << std::endl;
         }
 
 /***************************** */
