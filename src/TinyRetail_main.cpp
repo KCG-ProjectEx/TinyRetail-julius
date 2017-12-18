@@ -78,16 +78,22 @@ int main(int argc,char *argv[]){
 /***************************** */
 
         // 受け取ったデータをnega poji APIに投げる
-        std::string strReq = reqDef;
-        strReq += tag_tmp.sentence;
+        // std::string strReq = reqDef;
+        std::string strReq;
+        // strReq += tag_tmp.sentence;
 
-        std::string res; 
-        res = pCCurlNegaPoji->send_get(strReq);
+        // std::string res; 
+        // res = pCCurlNegaPoji->send_get(strReq);
+
+        strReq = pCCurlNegaPoji->urlEncode(tag_tmp.sentence);
+
+        res = pCCurlNegaPoji->send_get(reqDef + strReq);
 
         // string型をstring stream型に変更
         std::stringstream stmData;
         stmData << res;
 
+#if 0
         // jsonデータを得るために、ptreeに格納する
         ptree pt;
         read_json(stmData, pt);
@@ -106,7 +112,7 @@ int main(int argc,char *argv[]){
         else {
             std::cout << "score is nothing" << std::endl;
         }
-
+#endif
 /***************************** */
 
         // 受け取ったデータをjson形式に変換

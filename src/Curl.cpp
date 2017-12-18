@@ -53,17 +53,9 @@ string CCurl::send_get(string data){
 
     CURLcode ret;
     string make_url;
-    char *resData;
-
-    // dataをURLエンコードする
-    resData = curl_easy_escape(this->m_pCurl, data.c_str(), data.length());
-    if ( resData==NULL ){
-        cerr << "can not conversion to escape" << endl;
-        return NULL;
-    }
 
     // urlにdataを足し合わせる
-    make_url = this->m_url + "?" + resData;
+    make_url = this->m_url + "?" + data;
 
     // urlをセットする
     curl_easy_setopt(this->m_pCurl, CURLOPT_URL, make_url.c_str());
@@ -113,4 +105,18 @@ size_t CCurl::callbackWrite(char *ptr, size_t size, size_t nmemb, string *stream
     stream->append(ptr, dataLength);
 
     return dataLength;
+}
+
+string CCurl::urlEncode(string data){
+
+    char *resData;
+
+     // dataをURLエンコードする
+    resData = curl_easy_escape(this->m_pCurl, data.c_str(), data.length());
+    if ( resData==NULL ){
+        cerr << "can not conversion to escape" << endl;
+        return NULL;
+    }
+
+    return (string)resData;
 }
