@@ -34,9 +34,10 @@ int main(int argc,char *argv[]){
     ret = pCCurlNegaPoji->Begin("https://api.apitore.com/api/11/sentiment/predict");
     fprintf(stdout,"curl negapoji Begin() ret = %d\n",ret);    
     // tokenを追記
-    string reqDef += "access_token=c239e412-dafa-41b2-a2f8-e273abbc934f";
+    string reqDef = "access_token=c239e412-dafa-41b2-a2f8-e273abbc934f";
     // 識別データの追記
     reqDef += "&text=";
+    
 
 
     //getchar();
@@ -80,7 +81,7 @@ int main(int argc,char *argv[]){
         string strReq = reqDef;
         strReq += tag_tmp.sentence;
 
-        string res 
+        string res; 
         res = pCCurlNegaPoji->send_get(strReq);
 
         // string型をstring stream型に変更
@@ -119,7 +120,7 @@ int main(int argc,char *argv[]){
         // // postで送るデータを表示する
         cout << "send-post-JSON" << pCJSON->pop() << endl;
 
-        #if 1
+        #if 0
         // postで送信する
         if((pCCurl->send_post(pCJSON->pop())) == ""){ //異常終了したら
             fprintf(stderr,"ERR : not send to post\n");
