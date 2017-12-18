@@ -98,13 +98,13 @@ int main(int argc,char *argv[]){
             res = str.get();
         }
         else {
-            cstd::out << "sentiment is nothing" << std::endl;
+            std::cout << "sentiment is nothing" << std::endl;
         }
         if (boost::optional<double> value = pt.get_optional<double>("predict.score")) {
             std::cout << "score : " << value.get() << std::endl;
         }
         else {
-            std::out << "score is nothing" << endl;
+            std::out << "score is nothing" << std::endl;
         }
 
 /***************************** */
