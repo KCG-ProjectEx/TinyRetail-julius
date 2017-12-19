@@ -6,12 +6,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/foreach.hpp>
-#include <boost/optional.hpp>
+#include <json11.hpp>
 
-using namespace boost::property_tree;
+using std::string;
 
 int main(int argc,char *argv[]){
 
@@ -76,50 +73,20 @@ int main(int argc,char *argv[]){
         // fprintf(stdout,"word_str = %s\n",word_str);
 
 /***************************** */
+        string err;
+        const auto json = Json::parse(tag_tmp.sentence, err);
 
-        // 受け取ったデータをnega poji APIに投げる
-        // std::string strReq = reqDef;
-        std::string strReq;
-        // strReq += tag_tmp.sentence;
-
-        std::string res; 
-        // res = pCCurlNegaPoji->send_get(strReq);
-
-        strReq = pCCurlNegaPoji->urlEncode(tag_tmp.sentence);
-
-        res = pCCurlNegaPoji->send_get(reqDef + strReq);
-
-        // string型をstring stream型に変更
-        std::stringstream stmData;
-        stmData << res;
-
-#if 0
-        // jsonデータを得るために、ptreeに格納する
-        ptree pt;
-        read_json(stmData, pt);
-
-        // jsonデータの獲得
-        if (boost::optional<std::string> str = pt.get_optional<std::string>("predict.sentiment")) {
-            std::cout << "sentiment : " << str.get() << std::endl;
-            res = str.get();
+        for (auto &k : json["predict"].array_items()) {
+            std::cout << "    - " << k.dump() << "\n";
         }
-        else {
-            std::cout << "sentiment is nothing" << std::endl;
-        }
-        if (boost::optional<double> value = pt.get_optional<double>("predict.score")) {
-            std::cout << "score : " << value.get() << std::endl;
-        }
-        else {
-            std::cout << "score is nothing" << std::endl;
-        }
-#endif
+        
 /***************************** */
 
         // 受け取ったデータをjson形式に変換
         CJSON *pCJSON = new CJSON();
         pCJSON->push("mic_id","1");
         pCJSON->push("sentence",tag_tmp.sentence);
-        pCJSON->push("favor",res);
+        pCJSON->push("favor","1");
         // pCJSON->push("word_id",word_id+53);
         // pCJSON->push("word_rbd",word_rbd);
 

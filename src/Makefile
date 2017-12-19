@@ -4,11 +4,11 @@ LIBSENT=../julius/libsent
 LIBJULIUS=../julius/libjulius
 #LIBJULIUS=../libjulius
 
-INCLUDE_PATH=-I./include -I./lib/boost_1_65_1
+INCLUDE_PATH=-I./include 
 
 OPTION=-lcurl -std=c++11
 
-OBJS=TinyRetail_Julius.o TinyRetail_main.o Julius_Thread.o ThreadJob.o Curl.o JSON.o split.o negaPosi.o
+OBJS=TinyRetail_Julius.o TinyRetail_main.o Julius_Thread.o ThreadJob.o Curl.o JSON.o split.o negaPosi.o json11.o
 
 SRCS=$(OBJS:%.o=%.cpp)
 
