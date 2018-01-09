@@ -8,6 +8,7 @@
 #include <string>
 #include <json11.hpp>
 
+using namespace json11;
 using std::string;
 
 int main(int argc,char *argv[]){
@@ -75,6 +76,10 @@ int main(int argc,char *argv[]){
 /***************************** */
         string err;
         const auto json = Json::parse(tag_tmp.sentence, err);
+
+        if( json.is_null() ) fprintf(stderr, "nullだ\n");
+
+        std::cout << "log" << json["log"].string_value() << "\n";
 
         for (auto &k : json["predict"].array_items()) {
             std::cout << "    - " << k.dump() << "\n";
