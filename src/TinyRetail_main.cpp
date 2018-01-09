@@ -74,8 +74,16 @@ int main(int argc,char *argv[]){
         // fprintf(stdout,"word_str = %s\n",word_str);
 
 /***************************** */
+
+        string a;
+        a = reqDef;
+
+        a += pCCurlNegaPoji->urlEncode(tag_tmp.sentence);
+
+        a = pCCurlNegaPoji->send_get(a);
+
         string err;
-        const auto json = Json::parse(tag_tmp.sentence, err);
+        const auto json = Json::parse(a, err);
 
         if( json.is_null() ) fprintf(stderr, "nullだ\n");
 
