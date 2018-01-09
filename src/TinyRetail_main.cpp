@@ -82,17 +82,20 @@ int main(int argc,char *argv[]){
 
         a = pCCurlNegaPoji->send_get(a);
 
+        std::cout << "a " << a  << std::endl;
+
         string err;
         const auto json = Json::parse(a, err);
 
+        free(a);
+
         if( json.is_null() ) fprintf(stderr, "nullだ\n");
 
-        std::cout << "log" << json["log"].string_value() << "\n";
+        std::cout << "log " << json["predict"]["sentiment"].string_value() << "\n";
+        std::cerr << "err " << err << std::endl;
 
-        for (auto &k : json["predict"].array_items()) {
-            std::cout << "    - " << k.dump() << "\n";
-        }
-        
+        free(err);
+
 /***************************** */
 
         // 受け取ったデータをjson形式に変換
