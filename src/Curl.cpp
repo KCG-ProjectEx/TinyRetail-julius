@@ -54,6 +54,9 @@ string CCurl::send_get(string data){
     CURLcode ret;
     string make_url;
 
+    // バッファのクリア
+    this->m_resData = "";
+
     // urlにdataを足し合わせる
     make_url = this->m_url + "?" + data;
 
@@ -78,6 +81,9 @@ string CCurl::send_get(string data){
 string CCurl::send_post(string data){
     
     CURLcode res;
+
+    // バッファのクリア
+    this->m_resData = "";
 
     //POSTデータを指定する
     curl_easy_setopt(this->m_pCurl, CURLOPT_POSTFIELDS, data.c_str());

@@ -87,14 +87,11 @@ int main(int argc,char *argv[]){
         string err;
         const auto json = Json::parse(a, err);
 
-        free(a);
+        if( json.is_null() ) fprintf(stderr, "json11に送られてきたデータが空です\n");
 
-        if( json.is_null() ) fprintf(stderr, "nullだ\n");
-
-        std::cout << "log " << json["predict"]["sentiment"].string_value() << "\n";
-        std::cerr << "err " << err << std::endl;
-
-        free(err);
+        // std::cout << "log " << json["predict"]["sentiment"].string_value() << "\n";
+        // std::cout << "log " << json["predict"]["score"].string_value() << "\n";
+        // std::cerr << "err " << err << std::endl;
 
 /***************************** */
 
@@ -102,7 +99,8 @@ int main(int argc,char *argv[]){
         CJSON *pCJSON = new CJSON();
         pCJSON->push("mic_id","1");
         pCJSON->push("sentence",tag_tmp.sentence);
-        pCJSON->push("favor","1");
+        pCJSON->push("favor",json["predict"]["sentiment"]);
+        pCJSON->push("favor_score", json["predict"]["score"]);
         // pCJSON->push("word_id",word_id+53);
         // pCJSON->push("word_rbd",word_rbd);
 
