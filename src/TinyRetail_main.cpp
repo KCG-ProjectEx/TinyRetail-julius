@@ -75,17 +75,17 @@ int main(int argc,char *argv[]){
 
 /***************************** */
 
-        string a;
-        a = reqDef;
+        // string a;
+        // a = reqDef;
 
-        a += pCCurlNegaPoji->urlEncode(tag_tmp.sentence);
+        // a += pCCurlNegaPoji->urlEncode(tag_tmp.sentence);
 
-        a = pCCurlNegaPoji->send_get(a);
+        // a = pCCurlNegaPoji->send_get(a);
 
-        string err;
-        const auto json = Json::parse(a, err);
+        // string err;
+        // const auto json = Json::parse(a, err);
 
-        if( json.is_null() ) fprintf(stderr, "json11に送られてきたデータが空です\n");
+        // if( json.is_null() ) fprintf(stderr, "json11に送られてきたデータが空です\n");
 
         // std::cout << "log " << json["predict"]["sentiment"].string_value() << "\n";
         // std::cout << "log " << json["predict"]["score"].number_value() << "\n";
@@ -98,8 +98,10 @@ int main(int argc,char *argv[]){
         CJSON *pCJSON = new CJSON();
         pCJSON->push("mic_id","1");
         pCJSON->push("sentence",tag_tmp.sentence);
-        pCJSON->push("favor",json["predict"]["sentiment"].string_value());
-        pCJSON->push("favor_score", to_string( json["predict"]["score"].number_value() ));
+        // pCJSON->push("favor",json["predict"]["sentiment"].string_value());
+        // pCJSON->push("favor_score", to_string( json["predict"]["score"].number_value() ));
+        pCJSON->push("favor","");
+        pCJSON->push("favor_score", "0"
         // pCJSON->push("word_id",word_id+53);
         // pCJSON->push("word_rbd",word_rbd);
 
